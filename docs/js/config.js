@@ -10,9 +10,9 @@ const CONFIG = {
         HEIGHT: 30,
         SPEED: 3,
         JUMP_POWER: 12,
-        GRAVITY: 0.6,
         CLIMB_SPEED: 2,
-        COLOR: '#ff0000'
+        COLOR: '#ff0000',
+        GOAL_COLLISION_DISTANCE: 30
     },
     
     // タル設定
@@ -20,7 +20,8 @@ const CONFIG = {
         RADIUS: 10,
         SPEED: 2,
         SPAWN_INTERVAL: 2000, // ミリ秒
-        COLOR: '#8B4513'
+        COLOR: '#8B4513',
+        LADDER_DESCENT_PROBABILITY: 0.02
     },
     
     // ドンキーコング設定
@@ -57,7 +58,8 @@ const CONFIG = {
     // 物理
     PHYSICS: {
         GRAVITY: 0.6,
-        TERMINAL_VELOCITY: 15
+        TERMINAL_VELOCITY: 15,
+        FPS: 60
     }
 };
 

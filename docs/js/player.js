@@ -122,7 +122,7 @@ class Player {
         const dy = (this.y + this.height / 2) - (princess.y + princess.height / 2);
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        return distance < 30;
+        return distance < CONFIG.PLAYER.GOAL_COLLISION_DISTANCE;
     }
 
     draw(ctx) {

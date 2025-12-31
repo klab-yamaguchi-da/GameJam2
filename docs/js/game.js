@@ -112,7 +112,8 @@ class Game {
 
         // タル生成
         this.barrelSpawnTimer++;
-        if (this.barrelSpawnTimer > CONFIG.BARREL.SPAWN_INTERVAL / 16.67) { // 約60FPS想定
+        const framesPerSpawn = (CONFIG.BARREL.SPAWN_INTERVAL / 1000) * CONFIG.PHYSICS.FPS;
+        if (this.barrelSpawnTimer > framesPerSpawn) {
             this.spawnBarrel();
             this.barrelSpawnTimer = 0;
         }

@@ -50,7 +50,7 @@ class Barrel {
         }
 
         // はしごとの衝突判定（ランダムで降りる）
-        if (onPlatform && Math.random() < 0.02) {
+        if (onPlatform && Math.random() < CONFIG.BARREL.LADDER_DESCENT_PROBABILITY) {
             for (let ladder of ladders) {
                 if (this.x > ladder.x &&
                     this.x < ladder.x + CONFIG.LADDER.WIDTH) {

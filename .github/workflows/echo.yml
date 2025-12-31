@@ -6,6 +6,8 @@ on:
 jobs:
   echo:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Echo message
         run: echo "Hello from workflow_dispatch!"

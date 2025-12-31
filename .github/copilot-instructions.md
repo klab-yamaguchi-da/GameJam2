@@ -1,13 +1,40 @@
 # GitHub Copilot Instructions
 
-## Project Overview
-This is the GameJam2 project repository.
+## プロジェクト概要
+このリポジトリは、社内ゲームジャム向けに**Web3技術を使用したゲーム**を開発するためのプロジェクトです。
 
-## Coding Guidelines
-- Write clean and maintainable code
-- Follow best practices for the technologies used in this project
-- Add comments where necessary to explain complex logic
+## 言語・運用方針
+- **このリポジトリは日本語で運用します**
+- Pull Requestのタイトル、コメント、コミットメッセージは**日本語で記載**してください
+- コード内のコメントも日本語で記載することを推奨します
 
-## Project Structure
-- `.github/workflows/`: GitHub Actions workflows
-- `docs/`: GitHub Pages content
+## 開発方針
+
+### ゲーム開発
+- ゲームは `docs/index.html` をエントリーポイントとして作成します
+- コードは**適切にファイル分割**してください
+  - JavaScript、CSS、画像などは個別のファイルに分けて管理
+  - 機能ごとにモジュール化し、保守性を高める
+- Web3機能を統合する際は、適切なライブラリを使用してください
+
+### ドキュメント管理
+- **README.mdを常に最新の状態に保つ**こと
+  - プロジェクトの変更があった場合は、必ずREADME.mdも更新する
+  - 新しい機能、依存関係、セットアップ手順などを反映させる
+- **作業完了時にはこのinstructionsファイルも更新可能であれば更新する**
+  - 新しい開発パターンやベストプラクティスが見つかった場合
+  - プロジェクト構造に大きな変更があった場合
+  - 重要な技術的決定事項があった場合
+
+## コーディングガイドライン
+- クリーンで保守性の高いコードを書く
+- このプロジェクトで使用する技術のベストプラクティスに従う
+- 複雑なロジックには必ずコメントを追加する
+- Web3関連のコードではセキュリティに特に注意を払う
+
+## プロジェクト構造
+- `.github/workflows/`: GitHub Actionsワークフロー
+- `.github/copilot-instructions.md`: このファイル（Copilot向けの指示書）
+- `docs/`: GitHub Pagesコンテンツ（ゲーム本体）
+  - `docs/index.html`: ゲームのエントリーポイント
+- `README.md`: プロジェクトのドキュメント

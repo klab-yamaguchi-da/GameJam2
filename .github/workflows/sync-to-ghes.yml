@@ -58,6 +58,6 @@ jobs:
       
       - name: Add remote and push
         run: |
-          git remote get-url ghes 2>/dev/null || git remote add ghes git@github.jp.klab.com:yamaguchi-da/GhPagesAiGen.git
+          git remote get-url ghes 2>/dev/null || git remote add ghes git@github.jp.klab.com:yamaguchi-da/Gamejam2.git
           git fetch ghes main || true
           git push ghes main --force-with-lease

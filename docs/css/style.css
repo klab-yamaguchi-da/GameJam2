@@ -1,0 +1,129 @@
+/* ドンキーコング ゲームスタイル */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 800px;
+    height: 650px;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.screen.active {
+    display: flex;
+}
+
+#title-screen h1,
+#game-over-screen h1,
+#stage-clear-screen h1 {
+    font-size: 48px;
+    margin-bottom: 30px;
+    color: #ff6b6b;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+}
+
+#title-screen p {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #ffd93d;
+}
+
+button {
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to bottom, #ff6b6b 0%, #c92a2a 100%);
+    border: 3px solid #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+button:hover {
+    background: linear-gradient(to bottom, #ff8787 0%, #e03131 100%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#game-screen {
+    background: transparent;
+}
+
+#game-ui {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px 10px 0 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd93d;
+}
+
+#game-ui > div {
+    margin: 0 15px;
+}
+
+#score-value,
+#lives-value,
+#level-value {
+    color: #fff;
+}
+
+#game-canvas {
+    display: block;
+    background: #000;
+    border: 3px solid #333;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+#game-over-screen p,
+#stage-clear-screen p {
+    font-size: 24px;
+    margin: 10px 0;
+    color: #ffd93d;
+}
+
+#final-score,
+#stage-score {
+    color: #fff;
+    font-weight: bold;
+}

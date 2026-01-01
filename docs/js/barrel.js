@@ -98,11 +98,11 @@ class Barrel {
         ctx.fillRect(-3, -this.radius - 3, 6, 3);
         
         // キャップ
-        ctx.fillStyle = '#8B4513';
+        ctx.fillStyle = CONFIG.BARREL.CAP_COLOR;
         ctx.fillRect(-4, -this.radius - 5, 8, 2);
         
         // ラベル
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = CONFIG.BARREL.LABEL_COLOR;
         ctx.fillRect(-5, -2, 10, 4);
         
         // ハイライト

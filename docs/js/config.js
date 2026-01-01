@@ -18,6 +18,7 @@ const CONFIG = {
         TIE_COLOR: '#ff0000',       // ネクタイ（赤）
         SKIN_COLOR: '#ffdbac',      // 肌色
         HAIR_COLOR: '#000000',      // 髪（黒）
+        EYE_COLOR: '#000000',       // 目
         SHOES_COLOR: '#8B4513',     // 靴（茶色）
         BOX_COLOR: '#D2691E',       // 段ボール箱
         BOX_TAPE_COLOR: '#8B4513'   // 段ボールのテープ
@@ -29,6 +30,8 @@ const CONFIG = {
         SPEED: 2,
         SPAWN_INTERVAL: 2000, // ミリ秒
         COLOR: '#2d5016', // 緑色のボトル
+        CAP_COLOR: '#8B4513', // キャップ（茶色）
+        LABEL_COLOR: '#ffffff', // ラベル（白）
         LADDER_DESCENT_PROBABILITY: 0.02
     },
     
@@ -37,14 +40,17 @@ const CONFIG = {
         WIDTH: 40,
         HEIGHT: 50,
         COLOR: '#ffffff', // 白い服
-        FACE_COLOR: '#ff0000' // 赤い顔
+        FACE_COLOR: '#ff0000', // 赤い顔
+        MOUTH_COLOR: '#000000' // 口
     },
     
     // 扉設定
     PRINCESS: {
         WIDTH: 30,
         HEIGHT: 40,
-        COLOR: '#8B4513' // 茶色の扉
+        COLOR: '#8B4513', // 茶色の扉
+        FRAME_COLOR: '#654321', // 扉の枠
+        KNOB_COLOR: '#FFD700' // ドアノブ（金色）
     },
     
     // プラットフォーム設定

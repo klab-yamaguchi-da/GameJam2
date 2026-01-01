@@ -166,7 +166,7 @@ class Player {
         ctx.fillRect(this.x + 5, this.y, this.width - 10, 4);
         
         // 目
-        ctx.fillStyle = '#000000';
+        ctx.fillStyle = CONFIG.PLAYER.EYE_COLOR;
         ctx.fillRect(this.x + 7, this.y + 5, 2, 2);
         ctx.fillRect(this.x + this.width - 9, this.y + 5, 2, 2);
         

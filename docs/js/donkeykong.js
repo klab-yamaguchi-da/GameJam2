@@ -51,7 +51,7 @@ class DonkeyKong {
         ctx.fill();
         
         // 口（酔っぱらいの笑顔）
-        ctx.strokeStyle = '#000000';
+        ctx.strokeStyle = CONFIG.DONKEY_KONG.MOUTH_COLOR;
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(this.x + this.width / 2, this.y + 18, 5, 0, Math.PI);
@@ -116,12 +116,12 @@ class Princess {
         ctx.fillRect(this.x, this.y, this.width, this.height);
         
         // 扉の枠
-        ctx.strokeStyle = '#654321';
+        ctx.strokeStyle = CONFIG.PRINCESS.FRAME_COLOR;
         ctx.lineWidth = 3;
         ctx.strokeRect(this.x, this.y, this.width, this.height);
         
         // 扉の板模様（縦の線）
-        ctx.strokeStyle = '#654321';
+        ctx.strokeStyle = CONFIG.PRINCESS.FRAME_COLOR;
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(this.x + this.width / 2, this.y);
@@ -129,7 +129,7 @@ class Princess {
         ctx.stroke();
         
         // ドアノブ
-        ctx.fillStyle = '#FFD700';
+        ctx.fillStyle = CONFIG.PRINCESS.KNOB_COLOR;
         ctx.beginPath();
         ctx.arc(this.x + this.width - 8, this.y + this.height / 2, 3, 0, Math.PI * 2);
         ctx.fill();

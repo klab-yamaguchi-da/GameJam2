@@ -58,7 +58,7 @@ class DonkeyKong {
         ctx.stroke();
         
         // 頬の赤み
-        ctx.fillStyle = 'rgba(255, 100, 100, 0.5)';
+        ctx.fillStyle = CONFIG.DONKEY_KONG.BLUSH_COLOR;
         ctx.beginPath();
         ctx.arc(this.x + this.width / 2 - 10, this.y + 16, 3, 0, Math.PI * 2);
         ctx.fill();
@@ -136,7 +136,7 @@ class Princess {
         
         // 光の効果（アニメーション）
         if (this.animationFrame === 0) {
-            ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+            ctx.fillStyle = CONFIG.PRINCESS.LIGHT_EFFECT_COLOR;
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         

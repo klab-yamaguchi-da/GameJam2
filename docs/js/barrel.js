@@ -106,7 +106,7 @@ class Barrel {
         ctx.fillRect(-5, -2, 10, 4);
         
         // ハイライト
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.fillStyle = CONFIG.BARREL.HIGHLIGHT_COLOR;
         ctx.fillRect(-5, -this.radius + 2, 2, this.radius);
         
         ctx.restore();

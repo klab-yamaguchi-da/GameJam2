@@ -32,6 +32,7 @@ const CONFIG = {
         COLOR: '#2d5016', // 緑色のボトル
         CAP_COLOR: '#8B4513', // キャップ（茶色）
         LABEL_COLOR: '#ffffff', // ラベル（白）
+        HIGHLIGHT_COLOR: 'rgba(255, 255, 255, 0.3)', // ハイライト
         LADDER_DESCENT_PROBABILITY: 0.02
     },
     
@@ -41,7 +42,8 @@ const CONFIG = {
         HEIGHT: 50,
         COLOR: '#ffffff', // 白い服
         FACE_COLOR: '#ff0000', // 赤い顔
-        MOUTH_COLOR: '#000000' // 口
+        MOUTH_COLOR: '#000000', // 口
+        BLUSH_COLOR: 'rgba(255, 100, 100, 0.5)' // 頬の赤み
     },
     
     // 扉設定
@@ -50,7 +52,8 @@ const CONFIG = {
         HEIGHT: 40,
         COLOR: '#8B4513', // 茶色の扉
         FRAME_COLOR: '#654321', // 扉の枠
-        KNOB_COLOR: '#FFD700' // ドアノブ（金色）
+        KNOB_COLOR: '#FFD700', // ドアノブ（金色）
+        LIGHT_EFFECT_COLOR: 'rgba(255, 215, 0, 0.3)' // 光の効果
     },
     
     // プラットフォーム設定

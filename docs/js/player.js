@@ -129,11 +129,11 @@ class Player {
         // スーツを着た新入社員
         
         // 段ボール箱（荷物）
-        ctx.fillStyle = '#D2691E';
+        ctx.fillStyle = CONFIG.PLAYER.BOX_COLOR;
         ctx.fillRect(this.x + 2, this.y - 8, this.width - 4, 10);
         
         // 段ボールのテープ
-        ctx.strokeStyle = '#8B4513';
+        ctx.strokeStyle = CONFIG.PLAYER.BOX_TAPE_COLOR;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(this.x + 2, this.y - 3);
@@ -141,15 +141,15 @@ class Player {
         ctx.stroke();
         
         // 体（スーツ - 黒）
-        ctx.fillStyle = '#000000';
+        ctx.fillStyle = CONFIG.PLAYER.SUIT_COLOR;
         ctx.fillRect(this.x + 4, this.y + 12, this.width - 8, 13);
         
         // ワイシャツ（白）
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = CONFIG.PLAYER.SHIRT_COLOR;
         ctx.fillRect(this.x + 8, this.y + 13, this.width - 16, 10);
         
         // ネクタイ（赤）
-        ctx.fillStyle = '#ff0000';
+        ctx.fillStyle = CONFIG.PLAYER.TIE_COLOR;
         ctx.beginPath();
         ctx.moveTo(this.x + this.width / 2, this.y + 13);
         ctx.lineTo(this.x + this.width / 2 - 2, this.y + 22);
@@ -158,11 +158,11 @@ class Player {
         ctx.fill();
         
         // 頭（肌色）
-        ctx.fillStyle = '#ffdbac';
+        ctx.fillStyle = CONFIG.PLAYER.SKIN_COLOR;
         ctx.fillRect(this.x + 5, this.y + 2, this.width - 10, 10);
         
         // 髪（黒）
-        ctx.fillStyle = '#000000';
+        ctx.fillStyle = CONFIG.PLAYER.HAIR_COLOR;
         ctx.fillRect(this.x + 5, this.y, this.width - 10, 4);
         
         // 目
@@ -171,12 +171,12 @@ class Player {
         ctx.fillRect(this.x + this.width - 9, this.y + 5, 2, 2);
         
         // ズボン（黒）
-        ctx.fillStyle = '#000000';
+        ctx.fillStyle = CONFIG.PLAYER.SUIT_COLOR;
         ctx.fillRect(this.x + 4, this.y + 25, 6, this.height - 25);
         ctx.fillRect(this.x + this.width - 10, this.y + 25, 6, this.height - 25);
         
         // 靴（茶色）
-        ctx.fillStyle = '#8B4513';
+        ctx.fillStyle = CONFIG.PLAYER.SHOES_COLOR;
         ctx.fillRect(this.x + 2, this.y + this.height - 3, 7, 3);
         ctx.fillRect(this.x + this.width - 9, this.y + this.height - 3, 7, 3);
     }

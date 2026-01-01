@@ -11,8 +11,16 @@ const CONFIG = {
         SPEED: 3,
         JUMP_POWER: 12,
         CLIMB_SPEED: 2,
-        COLOR: '#ff0000',
-        GOAL_COLLISION_DISTANCE: 30
+        GOAL_COLLISION_DISTANCE: 30,
+        // 新入社員のカラー設定
+        SUIT_COLOR: '#000000',      // スーツ（黒）
+        SHIRT_COLOR: '#ffffff',     // ワイシャツ（白）
+        TIE_COLOR: '#ff0000',       // ネクタイ（赤）
+        SKIN_COLOR: '#ffdbac',      // 肌色
+        HAIR_COLOR: '#000000',      // 髪（黒）
+        SHOES_COLOR: '#8B4513',     // 靴（茶色）
+        BOX_COLOR: '#D2691E',       // 段ボール箱
+        BOX_TAPE_COLOR: '#8B4513'   // 段ボールのテープ
     },
     
     // 酒瓶設定

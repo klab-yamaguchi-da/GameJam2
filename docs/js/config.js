@@ -21,7 +21,8 @@ const CONFIG = {
         SPEED: 2,
         SPAWN_INTERVAL: 2000, // ミリ秒
         COLOR: '#8B4513',
-        LADDER_DESCENT_PROBABILITY: 0.02
+        LADDER_DESCENT_PROBABILITY: 0.02,
+        DIRECTION_LINE_ANGLE: 0.3 // 方向を示す斜め線の角度係数
     },
     
     // ドンキーコング設定

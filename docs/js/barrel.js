@@ -92,7 +92,7 @@ class Barrel {
         ctx.lineWidth = 2;
         ctx.beginPath();
         // 進行方向に向かって斜め上がりになるように角度をつける
-        const lineAngle = this.radius * 0.3; // 角度の傾き具合
+        const lineAngle = this.radius * CONFIG.BARREL.DIRECTION_LINE_ANGLE;
         if (this.direction > 0) {
             // 右方向: 左下から右上へ
             ctx.moveTo(-this.radius, lineAngle);

@@ -1,4 +1,4 @@
-// ドンキーコングクラス
+// 酔っぱらいクラス（旧ドンキーコング）
 class DonkeyKong {
     constructor(x, y) {
         this.x = x;
@@ -21,57 +21,74 @@ class DonkeyKong {
     draw(ctx) {
         ctx.save();
         
-        // 体
+        // 白い服（体）
         ctx.fillStyle = CONFIG.DONKEY_KONG.COLOR;
-        ctx.fillRect(this.x, this.y + 10, this.width, this.height - 10);
+        ctx.fillRect(this.x + 5, this.y + 20, this.width - 10, this.height - 20);
         
-        // 頭
-        ctx.fillStyle = '#8B4513';
+        // 赤い顔（頭）
+        ctx.fillStyle = CONFIG.DONKEY_KONG.FACE_COLOR;
         ctx.beginPath();
-        ctx.arc(this.x + this.width / 2, this.y + 15, 15, 0, Math.PI * 2);
+        ctx.arc(this.x + this.width / 2, this.y + 15, 12, 0, Math.PI * 2);
         ctx.fill();
         
-        // 目
+        // 目（酔っぱらいの目）
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(this.x + this.width / 2 - 5, this.y + 12, 3, 0, Math.PI * 2);
+        ctx.arc(this.x + this.width / 2 - 5, this.y + 13, 3, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(this.x + this.width / 2 + 5, this.y + 12, 3, 0, Math.PI * 2);
+        ctx.arc(this.x + this.width / 2 + 5, this.y + 13, 3, 0, Math.PI * 2);
         ctx.fill();
         
-        // 瞳
+        // 瞳（ぐるぐる目）
         ctx.fillStyle = '#000000';
+        const eyeOffset = this.animationFrame === 0 ? 0 : 1;
         ctx.beginPath();
-        ctx.arc(this.x + this.width / 2 - 5, this.y + 12, 1.5, 0, Math.PI * 2);
+        ctx.arc(this.x + this.width / 2 - 5 + eyeOffset, this.y + 13, 1.5, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(this.x + this.width / 2 + 5, this.y + 12, 1.5, 0, Math.PI * 2);
+        ctx.arc(this.x + this.width / 2 + 5 - eyeOffset, this.y + 13, 1.5, 0, Math.PI * 2);
         ctx.fill();
         
-        // 腕（アニメーション）
+        // 口（酔っぱらいの笑顔）
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(this.x + this.width / 2, this.y + 18, 5, 0, Math.PI);
+        ctx.stroke();
+        
+        // 頬の赤み
+        ctx.fillStyle = 'rgba(255, 100, 100, 0.5)';
+        ctx.beginPath();
+        ctx.arc(this.x + this.width / 2 - 10, this.y + 16, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.x + this.width / 2 + 10, this.y + 16, 3, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 腕（アニメーション）- 白い服の袖
         ctx.strokeStyle = CONFIG.DONKEY_KONG.COLOR;
-        ctx.lineWidth = 6;
+        ctx.lineWidth = 5;
         
         const armOffset = this.animationFrame === 0 ? 5 : -5;
         
         // 左腕
         ctx.beginPath();
-        ctx.moveTo(this.x + 5, this.y + 25);
-        ctx.lineTo(this.x - 5, this.y + 30 + armOffset);
+        ctx.moveTo(this.x + 8, this.y + 28);
+        ctx.lineTo(this.x, this.y + 35 + armOffset);
         ctx.stroke();
         
         // 右腕
         ctx.beginPath();
-        ctx.moveTo(this.x + this.width - 5, this.y + 25);
-        ctx.lineTo(this.x + this.width + 5, this.y + 30 + armOffset);
+        ctx.moveTo(this.x + this.width - 8, this.y + 28);
+        ctx.lineTo(this.x + this.width, this.y + 35 + armOffset);
         ctx.stroke();
         
         ctx.restore();
     }
 }
 
-// プリンセスクラス
+// 扉クラス（旧プリンセス）
 class Princess {
     constructor(x, y) {
         this.x = x;
@@ -94,58 +111,33 @@ class Princess {
     draw(ctx) {
         ctx.save();
         
-        // ドレス
+        // 扉の本体（茶色）
         ctx.fillStyle = CONFIG.PRINCESS.COLOR;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        
+        // 扉の枠
+        ctx.strokeStyle = '#654321';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        
+        // 扉の板模様（縦の線）
+        ctx.strokeStyle = '#654321';
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(this.x + this.width / 2, this.y + 10);
-        ctx.lineTo(this.x, this.y + this.height);
-        ctx.lineTo(this.x + this.width, this.y + this.height);
-        ctx.closePath();
+        ctx.moveTo(this.x + this.width / 2, this.y);
+        ctx.lineTo(this.x + this.width / 2, this.y + this.height);
+        ctx.stroke();
+        
+        // ドアノブ
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.arc(this.x + this.width - 8, this.y + this.height / 2, 3, 0, Math.PI * 2);
         ctx.fill();
         
-        // 頭
-        ctx.fillStyle = '#ffdbac';
-        ctx.beginPath();
-        ctx.arc(this.x + this.width / 2, this.y + 8, 8, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // 髪
-        ctx.fillStyle = '#ffd700';
-        ctx.beginPath();
-        ctx.arc(this.x + this.width / 2, this.y + 5, 9, Math.PI, Math.PI * 2);
-        ctx.fill();
-        
-        // 王冠
-        ctx.fillStyle = '#ffff00';
-        ctx.fillRect(this.x + this.width / 2 - 6, this.y - 2, 12, 4);
-        ctx.beginPath();
-        ctx.moveTo(this.x + this.width / 2 - 6, this.y - 2);
-        ctx.lineTo(this.x + this.width / 2 - 3, this.y - 6);
-        ctx.lineTo(this.x + this.width / 2, this.y - 2);
-        ctx.lineTo(this.x + this.width / 2 + 3, this.y - 6);
-        ctx.lineTo(this.x + this.width / 2 + 6, this.y - 2);
-        ctx.fill();
-        
-        // 目（瞬き）
+        // 光の効果（アニメーション）
         if (this.animationFrame === 0) {
-            ctx.fillStyle = '#000000';
-            ctx.beginPath();
-            ctx.arc(this.x + this.width / 2 - 3, this.y + 8, 1, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(this.x + this.width / 2 + 3, this.y + 8, 1, 0, Math.PI * 2);
-            ctx.fill();
-        } else {
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(this.x + this.width / 2 - 4, this.y + 8);
-            ctx.lineTo(this.x + this.width / 2 - 2, this.y + 8);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(this.x + this.width / 2 + 2, this.y + 8);
-            ctx.lineTo(this.x + this.width / 2 + 4, this.y + 8);
-            ctx.stroke();
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+            ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         
         ctx.restore();

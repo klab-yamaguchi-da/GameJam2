@@ -1,4 +1,4 @@
-// タルクラス
+// 酒瓶クラス（旧タル）
 class Barrel {
     constructor(x, y, direction = 1) {
         this.x = x;
@@ -81,24 +81,33 @@ class Barrel {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         
-        // タル本体
+        // 酒瓶の本体（緑色のボトル）
         ctx.fillStyle = CONFIG.BARREL.COLOR;
+        
+        // ボトルの形状
         ctx.beginPath();
-        ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+        ctx.moveTo(-6, -this.radius);
+        ctx.lineTo(-6, this.radius - 3);
+        ctx.lineTo(6, this.radius - 3);
+        ctx.lineTo(6, -this.radius);
+        ctx.closePath();
         ctx.fill();
         
-        // タルの模様
-        ctx.strokeStyle = '#654321';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(-this.radius, 0);
-        ctx.lineTo(this.radius, 0);
-        ctx.stroke();
+        // ボトルの首
+        ctx.fillStyle = CONFIG.BARREL.COLOR;
+        ctx.fillRect(-3, -this.radius - 3, 6, 3);
         
-        ctx.beginPath();
-        ctx.moveTo(0, -this.radius);
-        ctx.lineTo(0, this.radius);
-        ctx.stroke();
+        // キャップ
+        ctx.fillStyle = '#8B4513';
+        ctx.fillRect(-4, -this.radius - 5, 8, 2);
+        
+        // ラベル
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(-5, -2, 10, 4);
+        
+        // ハイライト
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.fillRect(-5, -this.radius + 2, 2, this.radius);
         
         ctx.restore();
     }

@@ -126,21 +126,59 @@ class Player {
     }
 
     draw(ctx) {
-        // プレイヤー本体（マリオ風）
-        ctx.fillStyle = CONFIG.PLAYER.COLOR;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        // スーツを着た新入社員
         
-        // 顔
-        ctx.fillStyle = '#ffdbac';
-        ctx.fillRect(this.x + 5, this.y + 5, this.width - 10, 10);
+        // 段ボール箱（荷物）
+        ctx.fillStyle = '#D2691E';
+        ctx.fillRect(this.x + 2, this.y - 8, this.width - 4, 10);
         
-        // 帽子
+        // 段ボールのテープ
+        ctx.strokeStyle = '#8B4513';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(this.x + 2, this.y - 3);
+        ctx.lineTo(this.x + this.width - 2, this.y - 3);
+        ctx.stroke();
+        
+        // 体（スーツ - 黒）
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(this.x + 4, this.y + 12, this.width - 8, 13);
+        
+        // ワイシャツ（白）
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(this.x + 8, this.y + 13, this.width - 16, 10);
+        
+        // ネクタイ（赤）
         ctx.fillStyle = '#ff0000';
-        ctx.fillRect(this.x + 2, this.y, this.width - 4, 8);
+        ctx.beginPath();
+        ctx.moveTo(this.x + this.width / 2, this.y + 13);
+        ctx.lineTo(this.x + this.width / 2 - 2, this.y + 22);
+        ctx.lineTo(this.x + this.width / 2 + 2, this.y + 22);
+        ctx.closePath();
+        ctx.fill();
         
-        // 体
-        ctx.fillStyle = '#0000ff';
-        ctx.fillRect(this.x + 4, this.y + 15, this.width - 8, 10);
+        // 頭（肌色）
+        ctx.fillStyle = '#ffdbac';
+        ctx.fillRect(this.x + 5, this.y + 2, this.width - 10, 10);
+        
+        // 髪（黒）
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(this.x + 5, this.y, this.width - 10, 4);
+        
+        // 目
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(this.x + 7, this.y + 5, 2, 2);
+        ctx.fillRect(this.x + this.width - 9, this.y + 5, 2, 2);
+        
+        // ズボン（黒）
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(this.x + 4, this.y + 25, 6, this.height - 25);
+        ctx.fillRect(this.x + this.width - 10, this.y + 25, 6, this.height - 25);
+        
+        // 靴（茶色）
+        ctx.fillStyle = '#8B4513';
+        ctx.fillRect(this.x + 2, this.y + this.height - 3, 7, 3);
+        ctx.fillRect(this.x + this.width - 9, this.y + this.height - 3, 7, 3);
     }
 
     reset(x, y) {

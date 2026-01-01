@@ -15,27 +15,28 @@ const CONFIG = {
         GOAL_COLLISION_DISTANCE: 30
     },
     
-    // タル設定
+    // 酒瓶設定
     BARREL: {
         RADIUS: 10,
         SPEED: 2,
         SPAWN_INTERVAL: 2000, // ミリ秒
-        COLOR: '#8B4513',
+        COLOR: '#2d5016', // 緑色のボトル
         LADDER_DESCENT_PROBABILITY: 0.02
     },
     
-    // ドンキーコング設定
+    // 酔っぱらい設定
     DONKEY_KONG: {
         WIDTH: 40,
         HEIGHT: 50,
-        COLOR: '#654321'
+        COLOR: '#ffffff', // 白い服
+        FACE_COLOR: '#ff0000' // 赤い顔
     },
     
-    // プリンセス設定
+    // 扉設定
     PRINCESS: {
-        WIDTH: 20,
-        HEIGHT: 30,
-        COLOR: '#ff69b4'
+        WIDTH: 30,
+        HEIGHT: 40,
+        COLOR: '#8B4513' // 茶色の扉
     },
     
     // プラットフォーム設定

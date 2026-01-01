@@ -85,14 +85,20 @@ class Player {
 
     checkPlatformCollision(platforms) {
         for (let platform of platforms) {
+            const slope = platform.slope || 0;
+            
+            // プレイヤーの中心X座標でのプラットフォームの高さを計算
+            const platformProgress = (this.x + this.width / 2 - platform.x) / platform.width;
+            const platformY = platform.y + slope * platformProgress;
+            
             // プレイヤーの足元がプラットフォームの上にあるか
             if (this.x + this.width > platform.x &&
                 this.x < platform.x + platform.width &&
-                this.y + this.height > platform.y &&
-                this.y + this.height <= platform.y + CONFIG.PLATFORM.HEIGHT + Math.abs(this.velocityY)) {
+                this.y + this.height > platformY - CONFIG.PLATFORM.HEIGHT &&
+                this.y + this.height <= platformY + Math.abs(this.velocityY) + CONFIG.PLATFORM.HEIGHT) {
                 
                 if (this.velocityY >= 0) { // 落下中のみ
-                    this.y = platform.y - this.height;
+                    this.y = platformY - this.height;
                     this.velocityY = 0;
                     this.isJumping = false;
                     this.isOnGround = true;

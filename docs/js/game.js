@@ -168,15 +168,19 @@ class Game {
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // プラットフォーム描画
-        this.ctx.fillStyle = CONFIG.PLATFORM.COLOR;
+        // プラットフォーム描画（斜めの線）
+        this.ctx.strokeStyle = CONFIG.PLATFORM.COLOR;
+        this.ctx.lineWidth = CONFIG.PLATFORM.HEIGHT;
+        this.ctx.lineCap = 'round';
         for (let platform of this.platforms) {
-            this.ctx.fillRect(
-                platform.x,
-                platform.y,
-                platform.width,
-                CONFIG.PLATFORM.HEIGHT
-            );
+            const slope = platform.slope || 0;
+            const y1 = platform.y;
+            const y2 = platform.y + slope;
+            
+            this.ctx.beginPath();
+            this.ctx.moveTo(platform.x, y1);
+            this.ctx.lineTo(platform.x + platform.width, y2);
+            this.ctx.stroke();
         }
 
         // はしご描画

@@ -87,12 +87,21 @@ class Barrel {
         ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
         ctx.fill();
         
-        // タルの模様
+        // タルの模様（方向を示す斜め線）
         ctx.strokeStyle = '#654321';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(-this.radius, 0);
-        ctx.lineTo(this.radius, 0);
+        // 進行方向に向かって斜め上がりになるように角度をつける
+        const lineAngle = this.radius * 0.3; // 角度の傾き具合
+        if (this.direction > 0) {
+            // 右方向: 左下から右上へ
+            ctx.moveTo(-this.radius, lineAngle);
+            ctx.lineTo(this.radius, -lineAngle);
+        } else {
+            // 左方向: 左上から右下へ
+            ctx.moveTo(-this.radius, -lineAngle);
+            ctx.lineTo(this.radius, lineAngle);
+        }
         ctx.stroke();
         
         ctx.beginPath();

@@ -88,7 +88,7 @@ class Player {
             const slope = platform.slope || 0;
             
             // プレイヤーの中心X座標でのプラットフォームの高さを計算
-            const platformProgress = (this.x + this.width / 2 - platform.x) / platform.width;
+            const platformProgress = platform.width > 0 ? (this.x + this.width / 2 - platform.x) / platform.width : 0;
             const platformY = platform.y + slope * platformProgress;
             
             // プレイヤーの足元がプラットフォームの上にあるか

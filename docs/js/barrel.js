@@ -28,7 +28,7 @@ class Barrel {
             const slope = platform.slope || 0;
             
             // タルの中心X座標でのプラットフォームの高さを計算
-            const platformProgress = (this.x - platform.x) / platform.width;
+            const platformProgress = platform.width > 0 ? (this.x - platform.x) / platform.width : 0;
             const platformY = platform.y + slope * platformProgress;
             
             if (this.x + this.radius > platform.x &&
@@ -53,7 +53,6 @@ class Barrel {
                     }
                     
                     // 傾斜によってタルの速度を調整（下り坂で加速、上り坂で減速）
-                    const slopeEffect = slope / platform.width;
                     if (slope > 0) {
                         // 右下がりの坂
                         if (this.direction > 0) {

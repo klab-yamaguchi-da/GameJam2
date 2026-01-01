@@ -11,15 +11,68 @@ body {
     background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 100%);
     color: #fff;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
+    padding: 20px 0;
+}
+
+/* 操作方法表示 */
+#game-instructions {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 15px;
+    padding: 15px 25px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#game-instructions h2 {
+    font-size: 22px;
+    color: #ff6b6b;
+    margin: 0 0 10px 0;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.instructions-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+}
+
+.instruction-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.instruction-key {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffd93d;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: 2px solid #ffd93d;
+    min-width: 80px;
+    text-align: center;
+}
+
+.instruction-desc {
+    font-size: 14px;
+    color: #fff;
 }
 
 #game-container {
     position: relative;
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
     height: 650px;
 }
 
@@ -126,4 +179,49 @@ button:active {
 #stage-score {
     color: #fff;
     font-weight: bold;
+}
+
+/* レスポンシブデザイン: モバイル対応 */
+@media (max-width: 850px) {
+    body {
+        padding: 10px;
+    }
+
+    #game-instructions {
+        padding: 10px 15px;
+    }
+
+    #game-instructions h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .instructions-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .instruction-item {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .instruction-key {
+        font-size: 14px;
+        padding: 6px 12px;
+        min-width: 70px;
+    }
+
+    .instruction-desc {
+        font-size: 13px;
+    }
+
+    #game-container {
+        height: auto;
+    }
+
+    #game-canvas {
+        width: 100%;
+        height: auto;
+    }
 }

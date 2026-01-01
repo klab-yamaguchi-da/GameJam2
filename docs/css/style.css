@@ -180,3 +180,48 @@ button:active {
     color: #fff;
     font-weight: bold;
 }
+
+/* レスポンシブデザイン: モバイル対応 */
+@media (max-width: 850px) {
+    body {
+        padding: 10px;
+    }
+
+    #game-instructions {
+        padding: 10px 15px;
+    }
+
+    #game-instructions h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .instructions-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .instruction-item {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .instruction-key {
+        font-size: 14px;
+        padding: 6px 12px;
+        min-width: 70px;
+    }
+
+    .instruction-desc {
+        font-size: 13px;
+    }
+
+    #game-container {
+        height: auto;
+    }
+
+    #game-canvas {
+        width: 100%;
+        height: auto;
+    }
+}

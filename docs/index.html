@@ -1,12 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameJam2</title>
+    <title>ドンキーコング - GameJam2</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Hello</h1>
+    <div id="game-container">
+        <div id="title-screen" class="screen active">
+            <h1>ドンキーコング</h1>
+            <p>方向キー: 移動</p>
+            <p>スペース: ジャンプ</p>
+            <p>上下キー: はしご登り</p>
+            <button id="start-button">スタート</button>
+        </div>
+        
+        <div id="game-screen" class="screen">
+            <div id="game-ui">
+                <div id="score">SCORE: <span id="score-value">0</span></div>
+                <div id="lives">LIVES: <span id="lives-value">3</span></div>
+                <div id="level">LEVEL: <span id="level-value">1</span></div>
+            </div>
+            <canvas id="game-canvas" width="800" height="600"></canvas>
+        </div>
+        
+        <div id="game-over-screen" class="screen">
+            <h1>ゲームオーバー</h1>
+            <p>スコア: <span id="final-score">0</span></p>
+            <button id="restart-button">もう一度プレイ</button>
+        </div>
+        
+        <div id="stage-clear-screen" class="screen">
+            <h1>ステージクリア！</h1>
+            <p>スコア: <span id="stage-score">0</span></p>
+            <button id="next-stage-button">次のステージへ</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/barrel.js"></script>
+    <script src="js/donkeykong.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ const CONFIG = {
         GOAL_COLLISION_DISTANCE: 30
     },
     
-    // タル設定
+    // 酒瓶設定
     BARREL: {
         RADIUS: 10,
         SPEED: 2,
@@ -25,7 +25,7 @@ const CONFIG = {
         LADDER_DESCENT_PROBABILITY: 0.02
     },
     
-    // ドンキーコング設定
+    // 酔っぱらい設定
     DONKEY_KONG: {
         WIDTH: 40,
         HEIGHT: 50,
@@ -33,7 +33,7 @@ const CONFIG = {
         FACE_COLOR: '#ff4444' // 赤い顔
     },
     
-    // プリンセス設定
+    // 光る扉設定
     PRINCESS: {
         WIDTH: 20,
         HEIGHT: 30,

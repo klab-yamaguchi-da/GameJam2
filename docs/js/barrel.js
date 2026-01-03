@@ -25,13 +25,19 @@ class Barrel {
         // プラットフォームとの衝突判定
         let onPlatform = false;
         for (let platform of platforms) {
+            const slope = platform.slope || 0;
+            
+            // タルの中心X座標でのプラットフォームの高さを計算
+            const platformProgress = platform.width > 0 ? (this.x - platform.x) / platform.width : 0;
+            const platformY = platform.y + slope * platformProgress;
+            
             if (this.x + this.radius > platform.x &&
                 this.x - this.radius < platform.x + platform.width &&
-                this.y + this.radius > platform.y &&
-                this.y + this.radius <= platform.y + CONFIG.PLATFORM.HEIGHT + Math.abs(this.velocityY)) {
+                this.y + this.radius > platformY &&
+                this.y + this.radius <= platformY + CONFIG.PLATFORM.HEIGHT + Math.abs(this.velocityY)) {
                 
                 if (this.velocityY >= 0) {
-                    this.y = platform.y - this.radius;
+                    this.y = platformY - this.radius;
                     this.velocityY = 0;
                     onPlatform = true;
                     
@@ -44,6 +50,27 @@ class Barrel {
                         this.x = platform.x + platform.width - this.radius;
                         this.velocityX = -CONFIG.BARREL.SPEED;
                         this.direction = -1;
+                    }
+                    
+                    // 傾斜によってタルの速度を調整（下り坂で加速、上り坂で減速）
+                    if (slope > 0) {
+                        // 右下がりの坂
+                        if (this.direction > 0) {
+                            // 右に移動中（下り坂）
+                            this.velocityX = CONFIG.BARREL.SPEED * 1.2;
+                        } else {
+                            // 左に移動中（上り坂）
+                            this.velocityX = -CONFIG.BARREL.SPEED * 0.8;
+                        }
+                    } else if (slope < 0) {
+                        // 右上がりの坂
+                        if (this.direction > 0) {
+                            // 右に移動中（上り坂）
+                            this.velocityX = CONFIG.BARREL.SPEED * 0.8;
+                        } else {
+                            // 左に移動中（下り坂）
+                            this.velocityX = -CONFIG.BARREL.SPEED * 1.2;
+                        }
                     }
                 }
             }

@@ -81,24 +81,34 @@ class Barrel {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         
-        // タル本体
+        // 瓶本体（緑色のガラス）
         ctx.fillStyle = CONFIG.BARREL.COLOR;
+        ctx.fillRect(-this.radius * 0.6, -this.radius, this.radius * 1.2, this.radius * 2);
+        
+        // 瓶の首部分
+        ctx.fillStyle = '#2d5016';
+        ctx.fillRect(-this.radius * 0.3, -this.radius * 1.3, this.radius * 0.6, this.radius * 0.3);
+        
+        // キャップ（金色）
+        ctx.fillStyle = '#ffd700';
+        ctx.fillRect(-this.radius * 0.35, -this.radius * 1.5, this.radius * 0.7, this.radius * 0.2);
+        
+        // ラベル
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(-this.radius * 0.5, -this.radius * 0.3, this.radius, this.radius * 0.6);
+        
+        // ラベルの文字「酒」
+        ctx.fillStyle = '#ff0000';
+        ctx.font = 'bold 12px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('酒', 0, 0);
+        
+        // 光沢
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
         ctx.beginPath();
-        ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+        ctx.ellipse(-this.radius * 0.3, -this.radius * 0.5, this.radius * 0.2, this.radius * 0.4, 0, 0, Math.PI * 2);
         ctx.fill();
-        
-        // タルの模様
-        ctx.strokeStyle = '#654321';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(-this.radius, 0);
-        ctx.lineTo(this.radius, 0);
-        ctx.stroke();
-        
-        ctx.beginPath();
-        ctx.moveTo(0, -this.radius);
-        ctx.lineTo(0, this.radius);
-        ctx.stroke();
         
         ctx.restore();
     }

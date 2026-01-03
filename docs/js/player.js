@@ -19,21 +19,30 @@ class Player {
         this.checkLadderCollision(ladders);
 
         // はしごに乗っている場合の動作
-        if (this.onLadder && (keys['ArrowUp'] || keys['ArrowDown'])) {
-            this.isClimbing = true;
-            this.velocityY = 0;
-            
-            if (keys['ArrowUp']) {
-                this.y -= CONFIG.PLAYER.CLIMB_SPEED;
-            }
-            if (keys['ArrowDown']) {
-                this.y += CONFIG.PLAYER.CLIMB_SPEED;
+        if (this.onLadder) {
+            // 上下キーのいずれかが押されている場合は登り降り
+            if (keys['ArrowUp'] || keys['ArrowDown']) {
+                this.isClimbing = true;
+                this.velocityY = 0;
+                
+                if (keys['ArrowUp']) {
+                    this.y -= CONFIG.PLAYER.CLIMB_SPEED;
+                }
+                if (keys['ArrowDown']) {
+                    this.y += CONFIG.PLAYER.CLIMB_SPEED;
+                }
+            } else {
+                // はしごに掴まっているが動いていない状態
+                // この場合も落下しないようにする
+                this.isClimbing = true;
+                this.velocityY = 0;
             }
         } else {
             this.isClimbing = false;
         }
 
         // 水平移動
+        // はしごに掴まっている状態でも左右移動可能
         this.velocityX = 0;
         if (keys['ArrowLeft']) {
             this.velocityX = -CONFIG.PLAYER.SPEED;

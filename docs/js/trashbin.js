@@ -57,9 +57,9 @@ class TrashBin {
         
         // 「ゴミ」のラベル
         ctx.fillStyle = CONFIG.TRASH_BIN.LABEL_COLOR;
-        ctx.font = 'bold 10px Arial';
+        ctx.font = `bold ${CONFIG.TRASH_BIN.LABEL_FONT_SIZE}px Arial`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('ゴミ', this.x + this.width / 2, this.y + this.height - 10);
+        ctx.fillText('ゴミ', this.x + this.width / 2, this.y + this.height - CONFIG.TRASH_BIN.LABEL_OFFSET_Y);
     }
 }

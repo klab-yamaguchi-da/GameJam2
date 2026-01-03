@@ -47,7 +47,9 @@ const CONFIG = {
         HEIGHT: 50,
         COLOR: '#808080', // グレーのゴミ箱
         LID_COLOR: '#a9a9a9', // フタの色
-        LABEL_COLOR: '#000000' // ラベルの色
+        LABEL_COLOR: '#000000', // ラベルの色
+        LABEL_FONT_SIZE: 10, // ラベルのフォントサイズ
+        LABEL_OFFSET_Y: 10 // ラベルの位置オフセット
     },
     
     // プラットフォーム設定

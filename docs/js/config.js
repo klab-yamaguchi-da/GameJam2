@@ -9,7 +9,7 @@ const CONFIG = {
         WIDTH: 20,
         HEIGHT: 30,
         SPEED: 3,
-        JUMP_POWER: 12,
+        JUMP_POWER: 6,
         CLIMB_SPEED: 2,
         COLOR: '#ff0000',
         GOAL_COLLISION_DISTANCE: 30

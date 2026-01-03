@@ -11,7 +11,8 @@ const CONFIG = {
         SPEED: 3,
         JUMP_POWER: 6,
         CLIMB_SPEED: 2,
-        COLOR: '#ff0000',
+        COLOR: '#87ceeb', // 水色のスーツ
+        BOX_COLOR: '#deb887', // 段ボール箱の色
         GOAL_COLLISION_DISTANCE: 30
     },
     
@@ -20,7 +21,7 @@ const CONFIG = {
         RADIUS: 10,
         SPEED: 2,
         SPAWN_INTERVAL: 2000, // ミリ秒
-        COLOR: '#8B4513',
+        COLOR: '#3d6b2e', // 緑色の酒瓶
         LADDER_DESCENT_PROBABILITY: 0.02
     },
     
@@ -28,14 +29,16 @@ const CONFIG = {
     DONKEY_KONG: {
         WIDTH: 40,
         HEIGHT: 50,
-        COLOR: '#654321'
+        COLOR: '#9acd32', // 黄緑の服
+        FACE_COLOR: '#ff4444' // 赤い顔
     },
     
     // プリンセス設定
     PRINCESS: {
         WIDTH: 20,
         HEIGHT: 30,
-        COLOR: '#ff69b4'
+        COLOR: '#ffd700', // 黄金の扉
+        DOOR_FRAME_COLOR: '#8b7355' // 扉の枠（茶色）
     },
     
     // プラットフォーム設定

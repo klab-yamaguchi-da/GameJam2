@@ -126,21 +126,45 @@ class Player {
     }
 
     draw(ctx) {
-        // プレイヤー本体（マリオ風）
-        ctx.fillStyle = CONFIG.PLAYER.COLOR;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        // 段ボール箱（プレイヤーが運んでいる）
+        ctx.fillStyle = CONFIG.PLAYER.BOX_COLOR;
+        ctx.fillRect(this.x, this.y - 8, this.width, 12);
         
-        // 顔
+        // 段ボールのテープ（十字）
+        ctx.strokeStyle = '#d4a574';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(this.x + this.width / 2, this.y - 8);
+        ctx.lineTo(this.x + this.width / 2, this.y + 4);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y - 2);
+        ctx.lineTo(this.x + this.width, this.y - 2);
+        ctx.stroke();
+        
+        // 顔（頭部）
         ctx.fillStyle = '#ffdbac';
-        ctx.fillRect(this.x + 5, this.y + 5, this.width - 10, 10);
+        ctx.fillRect(this.x + 5, this.y + 5, this.width - 10, 8);
         
-        // 帽子
-        ctx.fillStyle = '#ff0000';
-        ctx.fillRect(this.x + 2, this.y, this.width - 4, 8);
+        // 目
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(this.x + 7, this.y + 7, 2, 2);
+        ctx.fillRect(this.x + this.width - 9, this.y + 7, 2, 2);
         
-        // 体
-        ctx.fillStyle = '#0000ff';
-        ctx.fillRect(this.x + 4, this.y + 15, this.width - 8, 10);
+        // 口（小さい）
+        ctx.fillRect(this.x + this.width / 2 - 2, this.y + 11, 4, 1);
+        
+        // スーツ（水色）
+        ctx.fillStyle = CONFIG.PLAYER.COLOR;
+        ctx.fillRect(this.x + 4, this.y + 13, this.width - 8, 12);
+        
+        // ネクタイ（紺色）
+        ctx.fillStyle = '#000080';
+        ctx.fillRect(this.x + this.width / 2 - 2, this.y + 13, 4, 8);
+        
+        // ズボン（濃い灰色）
+        ctx.fillStyle = '#404040';
+        ctx.fillRect(this.x + 4, this.y + 25, this.width - 8, 5);
     }
 
     reset(x, y) {

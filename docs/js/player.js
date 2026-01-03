@@ -42,7 +42,7 @@ class Player {
         }
 
         // 水平移動
-        // はしごに掴まっている状態で、地面に立っている場合は左右移動可能
+        // はしごに掴まっている状態でも左右移動可能
         this.velocityX = 0;
         if (keys['ArrowLeft']) {
             this.velocityX = -CONFIG.PLAYER.SPEED;

@@ -22,6 +22,17 @@ class Barrel {
         // 回転アニメーション
         this.rotation += this.velocityX * 0.1;
 
+        // 画面の壁にぶつかったら方向転換
+        if (this.x - this.radius <= 0) {
+            this.x = this.radius;
+            this.velocityX = CONFIG.BARREL.SPEED;
+            this.direction = 1;
+        } else if (this.x + this.radius >= CONFIG.CANVAS_WIDTH) {
+            this.x = CONFIG.CANVAS_WIDTH - this.radius;
+            this.velocityX = -CONFIG.BARREL.SPEED;
+            this.direction = -1;
+        }
+
         // プラットフォームとの衝突判定
         let onPlatform = false;
         for (let platform of platforms) {
@@ -34,17 +45,6 @@ class Barrel {
                     this.y = platform.y - this.radius;
                     this.velocityY = 0;
                     onPlatform = true;
-                    
-                    // プラットフォームの端に達したら方向転換
-                    if (this.x - this.radius < platform.x) {
-                        this.x = platform.x + this.radius;
-                        this.velocityX = CONFIG.BARREL.SPEED;
-                        this.direction = 1;
-                    } else if (this.x + this.radius > platform.x + platform.width) {
-                        this.x = platform.x + platform.width - this.radius;
-                        this.velocityX = -CONFIG.BARREL.SPEED;
-                        this.direction = -1;
-                    }
                 }
             }
         }

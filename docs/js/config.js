@@ -61,7 +61,8 @@ const CONFIG = {
     // はしご設定
     LADDER: {
         COLOR: '#ffd700',
-        WIDTH: 30
+        WIDTH: 30,
+        GRAB_TOLERANCE: 10 // 上のステージから梯子を掴める範囲（ピクセル）
     },
     
     // ゲームルール

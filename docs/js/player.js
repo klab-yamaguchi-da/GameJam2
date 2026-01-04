@@ -15,6 +15,11 @@ class Player {
     }
 
     update(keys, platforms, ladders) {
+        // プラットフォームとの衝突判定（先に実行して地面判定を更新）
+        // この時点での地面判定は、はしご操作の判定に使用される
+        this.isOnGround = false;
+        this.checkPlatformCollision(platforms);
+
         // はしごとの接触判定
         this.checkLadderCollision(ladders);
 
@@ -31,30 +36,37 @@ class Player {
                 if (keys['ArrowDown']) {
                     this.y += CONFIG.PLAYER.CLIMB_SPEED;
                 }
-            } else {
-                // はしごに掴まっているが動いていない状態
+            } else if (!this.isOnGround) {
+                // はしごに掴まっているが動いていない状態（地面に立っていない場合のみ）
                 // この場合も落下しないようにする
                 this.isClimbing = true;
                 this.velocityY = 0;
+            } else {
+                // 地面に立っている場合は通常状態
+                this.isClimbing = false;
             }
         } else {
             this.isClimbing = false;
         }
 
         // 水平移動
-        // はしごに掴まっている状態でも左右移動可能
+        // はしごに掴まって登り降りしている途中（地面に立っていない状態）は左右移動を禁止
+        // 地面に立っているか、はしごに掴まっていない場合は左右移動可能
+        const canMoveHorizontally = !this.isClimbing || this.isOnGround;
         this.velocityX = 0;
-        if (keys['ArrowLeft']) {
-            this.velocityX = -CONFIG.PLAYER.SPEED;
-            this.direction = -1;
-        }
-        if (keys['ArrowRight']) {
-            this.velocityX = CONFIG.PLAYER.SPEED;
-            this.direction = 1;
+        if (canMoveHorizontally) {
+            if (keys['ArrowLeft']) {
+                this.velocityX = -CONFIG.PLAYER.SPEED;
+                this.direction = -1;
+            }
+            if (keys['ArrowRight']) {
+                this.velocityX = CONFIG.PLAYER.SPEED;
+                this.direction = 1;
+            }
         }
 
-        // ジャンプ
-        if (keys[' '] && this.isOnGround && !this.isClimbing) {
+        // ジャンプ（地面に立っている場合のみ、はしごの上でもジャンプ可能）
+        if (keys[' '] && this.isOnGround) {
             this.velocityY = -CONFIG.PLAYER.JUMP_POWER;
             this.isJumping = true;
             this.isOnGround = false;
@@ -74,8 +86,8 @@ class Player {
         this.x += this.velocityX;
         this.y += this.velocityY;
 
-        // プラットフォームとの衝突判定
-        this.isOnGround = false;
+        // プラットフォームとの衝突判定（移動後にも再チェック）
+        // 移動後の位置補正と地面判定の更新のために必要
         this.checkPlatformCollision(platforms);
 
         // 画面外チェック

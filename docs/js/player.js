@@ -23,8 +23,8 @@ class Player {
         this.checkLadderCollision(ladders);
 
         // はしごに乗っている場合の動作
-        if (this.onLadder && !this.isOnGround) {
-            // 地面に立っていない状態で、上下キーのいずれかが押されている場合は登り降り
+        if (this.onLadder) {
+            // 上下キーのいずれかが押されている場合は登り降り
             if (keys['ArrowUp'] || keys['ArrowDown']) {
                 this.isClimbing = true;
                 this.velocityY = 0;
@@ -35,11 +35,14 @@ class Player {
                 if (keys['ArrowDown']) {
                     this.y += CONFIG.PLAYER.CLIMB_SPEED;
                 }
-            } else {
-                // はしごに掴まっているが動いていない状態
+            } else if (!this.isOnGround) {
+                // はしごに掴まっているが動いていない状態（地面に立っていない場合のみ）
                 // この場合も落下しないようにする
                 this.isClimbing = true;
                 this.velocityY = 0;
+            } else {
+                // 地面に立っている場合は通常状態
+                this.isClimbing = false;
             }
         } else {
             this.isClimbing = false;

@@ -99,7 +99,7 @@ const LEVELS = [
         ],
         donkeyKong: { x: 300, y: 30 },
         princess: { x: 700, y: 50 },
-        playerStart: { x: 50, y: 550 },
+        playerStart: { x: 730, y: 550 },
         trashBin: { x: 750, y: 530 } // 最下層の右端
     }
 ];

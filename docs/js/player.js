@@ -16,6 +16,7 @@ class Player {
 
     update(keys, platforms, ladders) {
         // プラットフォームとの衝突判定（先に実行して地面判定を更新）
+        // この時点での地面判定は、はしご操作の判定に使用される
         this.isOnGround = false;
         this.checkPlatformCollision(platforms);
 
@@ -50,8 +51,10 @@ class Player {
 
         // 水平移動
         // はしごに掴まって登り降りしている途中（地面に立っていない状態）は左右移動を禁止
+        // 地面に立っているか、はしごに掴まっていない場合は左右移動可能
+        const canMoveHorizontally = !this.isClimbing || this.isOnGround;
         this.velocityX = 0;
-        if (!this.isClimbing || this.isOnGround) {
+        if (canMoveHorizontally) {
             if (keys['ArrowLeft']) {
                 this.velocityX = -CONFIG.PLAYER.SPEED;
                 this.direction = -1;
@@ -84,6 +87,7 @@ class Player {
         this.y += this.velocityY;
 
         // プラットフォームとの衝突判定（移動後にも再チェック）
+        // 移動後の位置補正と地面判定の更新のために必要
         this.checkPlatformCollision(platforms);
 
         // 画面外チェック

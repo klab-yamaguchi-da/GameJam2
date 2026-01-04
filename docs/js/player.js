@@ -1,6 +1,6 @@
 // プレイヤークラス
 class Player {
-    constructor(x, y) {
+    constructor(x, y, speedMultiplier = 1.0, jumpMultiplier = 1.0) {
         this.x = x;
         this.y = y;
         this.width = CONFIG.PLAYER.WIDTH;
@@ -12,6 +12,8 @@ class Player {
         this.onLadder = false;
         this.direction = 1; // 1: 右向き, -1: 左向き
         this.isOnGround = false;
+        this.speedMultiplier = speedMultiplier;
+        this.jumpMultiplier = jumpMultiplier;
     }
 
     update(keys, platforms, ladders) {
@@ -56,18 +58,18 @@ class Player {
         this.velocityX = 0;
         if (canMoveHorizontally) {
             if (keys['ArrowLeft']) {
-                this.velocityX = -CONFIG.PLAYER.SPEED;
+                this.velocityX = -CONFIG.PLAYER.SPEED * this.speedMultiplier;
                 this.direction = -1;
             }
             if (keys['ArrowRight']) {
-                this.velocityX = CONFIG.PLAYER.SPEED;
+                this.velocityX = CONFIG.PLAYER.SPEED * this.speedMultiplier;
                 this.direction = 1;
             }
         }
 
         // ジャンプ（地面に立っている場合のみ、はしごの上でもジャンプ可能）
         if (keys[' '] && this.isOnGround) {
-            this.velocityY = -CONFIG.PLAYER.JUMP_POWER;
+            this.velocityY = -CONFIG.PLAYER.JUMP_POWER * this.jumpMultiplier;
             this.isJumping = true;
             this.isOnGround = false;
         }
@@ -209,7 +211,7 @@ class Player {
         ctx.fillRect(this.x + 4, this.y + 25, this.width - 8, 5);
     }
 
-    reset(x, y) {
+    reset(x, y, speedMultiplier = 1.0, jumpMultiplier = 1.0) {
         this.x = x;
         this.y = y;
         this.velocityX = 0;
@@ -218,5 +220,7 @@ class Player {
         this.isClimbing = false;
         this.onLadder = false;
         this.isOnGround = false;
+        this.speedMultiplier = speedMultiplier;
+        this.jumpMultiplier = jumpMultiplier;
     }
 }

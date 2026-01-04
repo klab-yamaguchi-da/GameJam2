@@ -12,7 +12,7 @@ class GameManager {
     setupUI() {
         // スタートボタン
         document.getElementById('start-button').addEventListener('click', () => {
-            this.showStory();
+            this.showStory(0);
         });
 
         // ストーリー続行ボタン
@@ -22,7 +22,7 @@ class GameManager {
 
         // リスタートボタン
         document.getElementById('restart-button').addEventListener('click', () => {
-            this.startGame();
+            this.showStory(0);
         });
 
         // 次のステージボタン
@@ -44,16 +44,31 @@ class GameManager {
         }
     }
 
-    showStory() {
+    showStory(levelIndex) {
+        // ストーリーテキストを更新
+        const levelData = LEVELS[levelIndex];
+        const storyTextElement = document.querySelector('.story-text p');
+        if (storyTextElement && levelData.storyMessage) {
+            storyTextElement.textContent = levelData.storyMessage;
+        }
+        
+        // 次のレベルインデックスを保存
+        this.nextLevelIndex = levelIndex;
+        
         this.showScreen('story');
     }
 
     startGame() {
         this.showScreen('game');
         
-        // ゲームインスタンスを作成
-        this.game = new Game(this.canvas);
-        this.game.loadLevel(0);
+        // ゲームインスタンスを作成または再利用
+        if (!this.game) {
+            this.game = new Game(this.canvas);
+        }
+        
+        // 指定されたレベルをロード
+        const levelToLoad = this.nextLevelIndex ?? 0;
+        this.game.loadLevel(levelToLoad);
         
         // UI更新
         this.updateUI();
@@ -69,11 +84,8 @@ class GameManager {
         const nextLevel = this.game.getLevel();
         
         if (nextLevel < LEVELS.length) {
-            // 次のステージをロード
-            this.game.loadLevel(nextLevel);
-            this.showScreen('game');
-            this.updateUI();
-            this.runGameLoop();
+            // 次のステージのストーリーを表示
+            this.showStory(nextLevel);
         } else {
             // すべてのステージをクリア
             this.showGameOver();

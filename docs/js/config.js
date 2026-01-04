@@ -81,6 +81,7 @@ const CONFIG = {
 // レベル設計（プラットフォームとはしごの配置）
 const LEVELS = [
     {
+        // LEVEL 1
         platforms: [
             // 各プラットフォーム: {x, y, width}
             { x: 0, y: 580, width: 800 },      // 最下層
@@ -101,6 +102,36 @@ const LEVELS = [
         donkeyKong: { x: 300, y: 30 },
         princess: { x: 700, y: 50 },
         playerStart: { x: 730, y: 550 },
-        trashBin: { x: 750, y: 530 } // 最下層の右端
+        trashBin: { x: 750, y: 530 }, // 最下層の右端
+        speedMultiplier: 1.0,
+        jumpMultiplier: 1.0,
+        storyMessage: '引っ越しの最後の荷物を４つ運び忘れていた！けど、もう引っ越し先で引っ越し祝いの宴会が始まっている。飲みたくなっちゃうので酒瓶を避けながら荷物運びしよう。'
+    },
+    {
+        // LEVEL 2
+        platforms: [
+            // 各プラットフォーム: {x, y, width}
+            { x: 0, y: 580, width: 800 },      // 最下層
+            { x: 0, y: 480, width: 700 },      // 2層目
+            { x: 100, y: 380, width: 700 },    // 3層目
+            { x: 0, y: 280, width: 600 },      // 4層目
+            { x: 200, y: 180, width: 600 },    // 5層目
+            { x: 0, y: 80, width: 500 }        // 最上層
+        ],
+        ladders: [
+            // 各はしご: {x, y, height}
+            { x: 650, y: 480, height: 100 },
+            { x: 150, y: 380, height: 100 },
+            { x: 550, y: 280, height: 100 },
+            { x: 250, y: 180, height: 100 },
+            { x: 450, y: 80, height: 100 }
+        ],
+        donkeyKong: { x: 100, y: 30 },
+        princess: { x: 400, y: 50 },
+        playerStart: { x: 50, y: 550 },
+        trashBin: { x: 750, y: 530 }, // 最下層の右端
+        speedMultiplier: 0.7,
+        jumpMultiplier: 1.5,
+        storyMessage: '次の荷物は軽いけどゆっくり運ばなきゃ'
     }
 ];

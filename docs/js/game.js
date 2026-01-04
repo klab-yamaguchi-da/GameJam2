@@ -53,7 +53,9 @@ class Game {
         // エンティティを初期化
         this.player = new Player(
             levelData.playerStart.x,
-            levelData.playerStart.y
+            levelData.playerStart.y,
+            levelData.speedMultiplier || 1.0,
+            levelData.jumpMultiplier || 1.0
         );
         
         this.donkeyKong = new DonkeyKong(
@@ -88,7 +90,9 @@ class Game {
                     const levelData = LEVELS[this.level];
                     this.player.reset(
                         levelData.playerStart.x,
-                        levelData.playerStart.y
+                        levelData.playerStart.y,
+                        levelData.speedMultiplier || 1.0,
+                        levelData.jumpMultiplier || 1.0
                     );
                     this.barrels = [];
                     this.gameState = 'playing';

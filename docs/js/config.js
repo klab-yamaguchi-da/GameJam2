@@ -83,7 +83,7 @@ const LEVELS = [
             { x: 150, y: 480, height: 100 },
             { x: 600, y: 380, height: 100 },
             { x: 200, y: 280, height: 100 },
-            { x: 700, y: 176, height: 108 },
+            { x: 500, y: 180, height: 100 },
             { x: 300, y: 80, height: 100 }
         ],
         donkeyKong: { x: 300, y: 30 },

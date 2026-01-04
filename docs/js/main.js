@@ -67,7 +67,7 @@ class GameManager {
         }
         
         // 指定されたレベルをロード
-        const levelToLoad = this.nextLevelIndex !== undefined ? this.nextLevelIndex : 0;
+        const levelToLoad = this.nextLevelIndex ?? 0;
         this.game.loadLevel(levelToLoad);
         
         // UI更新

@@ -211,7 +211,7 @@ class Player {
         ctx.fillRect(this.x + 4, this.y + 25, this.width - 8, 5);
     }
 
-    reset(x, y, speedMultiplier = null, jumpMultiplier = null) {
+    reset(x, y, speedMultiplier = 1.0, jumpMultiplier = 1.0) {
         this.x = x;
         this.y = y;
         this.velocityX = 0;
@@ -220,11 +220,7 @@ class Player {
         this.isClimbing = false;
         this.onLadder = false;
         this.isOnGround = false;
-        if (speedMultiplier !== null) {
-            this.speedMultiplier = speedMultiplier;
-        }
-        if (jumpMultiplier !== null) {
-            this.jumpMultiplier = jumpMultiplier;
-        }
+        this.speedMultiplier = speedMultiplier;
+        this.jumpMultiplier = jumpMultiplier;
     }
 }

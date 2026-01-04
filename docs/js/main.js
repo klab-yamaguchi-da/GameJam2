@@ -12,6 +12,11 @@ class GameManager {
     setupUI() {
         // スタートボタン
         document.getElementById('start-button').addEventListener('click', () => {
+            this.showStory();
+        });
+
+        // ストーリー続行ボタン
+        document.getElementById('story-continue-button').addEventListener('click', () => {
             this.startGame();
         });
 
@@ -37,6 +42,10 @@ class GameManager {
             targetScreen.classList.add('active');
             this.currentScreen = screenName;
         }
+    }
+
+    showStory() {
+        this.showScreen('story');
     }
 
     startGame() {

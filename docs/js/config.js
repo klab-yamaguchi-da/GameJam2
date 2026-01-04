@@ -134,6 +134,7 @@ const LEVELS = [
             { x: 450, y: 280, height: 40 },
             { x: 600, y: 280, height: 40 },
             { x: 250, y: 180, height: 100 },
+            { x: 750, y: 180, height: 200 },  // 5層目右端から50の位置に長さ200のはしご
             { x: 450, y: 80, height: 100 }
         ],
         donkeyKong: { x: 100, y: 30 },

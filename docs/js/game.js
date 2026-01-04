@@ -14,6 +14,7 @@ class Game {
         this.barrels = [];
         this.donkeyKong = null;
         this.princess = null;
+        this.trashBin = null;
         
         // レベルデータ
         this.platforms = [];
@@ -63,6 +64,11 @@ class Game {
         this.princess = new Princess(
             levelData.princess.x,
             levelData.princess.y
+        );
+        
+        this.trashBin = new TrashBin(
+            levelData.trashBin.x,
+            levelData.trashBin.y
         );
         
         this.barrels = [];
@@ -122,6 +128,13 @@ class Game {
         for (let i = this.barrels.length - 1; i >= 0; i--) {
             const barrel = this.barrels[i];
             barrel.update(this.platforms, this.ladders);
+
+            // ゴミ箱との衝突判定
+            if (this.trashBin.checkCollision(barrel)) {
+                this.barrels.splice(i, 1);
+                this.score += CONFIG.POINTS_PER_BARREL;
+                continue;
+            }
 
             // プレイヤーとの衝突判定
             if (barrel.checkCollision(this.player)) {
@@ -208,6 +221,9 @@ class Game {
         
         // プリンセス描画
         this.princess.draw(this.ctx);
+        
+        // ゴミ箱描画
+        this.trashBin.draw(this.ctx);
 
         // タル描画
         for (let barrel of this.barrels) {

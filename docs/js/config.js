@@ -41,6 +41,17 @@ const CONFIG = {
         DOOR_FRAME_COLOR: '#8b7355' // 扉の枠（茶色）
     },
     
+    // ゴミ箱設定
+    TRASH_BIN: {
+        WIDTH: 40,
+        HEIGHT: 50,
+        COLOR: '#808080', // グレーのゴミ箱
+        LID_COLOR: '#a9a9a9', // フタの色
+        LABEL_COLOR: '#000000', // ラベルの色
+        LABEL_FONT_SIZE: 10, // ラベルのフォントサイズ
+        LABEL_OFFSET_Y: 10 // ラベルの位置オフセット
+    },
+    
     // プラットフォーム設定
     PLATFORM: {
         COLOR: '#ff1493',
@@ -88,6 +99,7 @@ const LEVELS = [
         ],
         donkeyKong: { x: 300, y: 30 },
         princess: { x: 700, y: 50 },
-        playerStart: { x: 50, y: 550 }
+        playerStart: { x: 50, y: 550 },
+        trashBin: { x: 750, y: 530 } // 最下層の右端
     }
 ];

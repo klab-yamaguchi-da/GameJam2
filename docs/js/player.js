@@ -109,7 +109,7 @@ class Player {
             // プレイヤーの足元がプラットフォームの上にあるか
             if (this.x + this.width > platform.x &&
                 this.x < platform.x + platform.width &&
-                this.y + this.height > platform.y &&
+                this.y + this.height >= platform.y &&
                 this.y + this.height <= platform.y + CONFIG.PLATFORM.HEIGHT + Math.abs(this.velocityY)) {
                 
                 if (this.velocityY >= 0) { // 落下中のみ

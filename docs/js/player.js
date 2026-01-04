@@ -15,12 +15,16 @@ class Player {
     }
 
     update(keys, platforms, ladders) {
+        // プラットフォームとの衝突判定（先に実行して地面判定を更新）
+        this.isOnGround = false;
+        this.checkPlatformCollision(platforms);
+
         // はしごとの接触判定
         this.checkLadderCollision(ladders);
 
         // はしごに乗っている場合の動作
-        if (this.onLadder) {
-            // 上下キーのいずれかが押されている場合は登り降り
+        if (this.onLadder && !this.isOnGround) {
+            // 地面に立っていない状態で、上下キーのいずれかが押されている場合は登り降り
             if (keys['ArrowUp'] || keys['ArrowDown']) {
                 this.isClimbing = true;
                 this.velocityY = 0;
@@ -42,19 +46,21 @@ class Player {
         }
 
         // 水平移動
-        // はしごに掴まっている状態でも左右移動可能
+        // はしごに掴まって登り降りしている途中（地面に立っていない状態）は左右移動を禁止
         this.velocityX = 0;
-        if (keys['ArrowLeft']) {
-            this.velocityX = -CONFIG.PLAYER.SPEED;
-            this.direction = -1;
-        }
-        if (keys['ArrowRight']) {
-            this.velocityX = CONFIG.PLAYER.SPEED;
-            this.direction = 1;
+        if (!this.isClimbing || this.isOnGround) {
+            if (keys['ArrowLeft']) {
+                this.velocityX = -CONFIG.PLAYER.SPEED;
+                this.direction = -1;
+            }
+            if (keys['ArrowRight']) {
+                this.velocityX = CONFIG.PLAYER.SPEED;
+                this.direction = 1;
+            }
         }
 
-        // ジャンプ
-        if (keys[' '] && this.isOnGround && !this.isClimbing) {
+        // ジャンプ（地面に立っている場合のみ、はしごの上でもジャンプ可能）
+        if (keys[' '] && this.isOnGround) {
             this.velocityY = -CONFIG.PLAYER.JUMP_POWER;
             this.isJumping = true;
             this.isOnGround = false;
@@ -74,8 +80,7 @@ class Player {
         this.x += this.velocityX;
         this.y += this.velocityY;
 
-        // プラットフォームとの衝突判定
-        this.isOnGround = false;
+        // プラットフォームとの衝突判定（移動後にも再チェック）
         this.checkPlatformCollision(platforms);
 
         // 画面外チェック

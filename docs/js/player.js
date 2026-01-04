@@ -21,7 +21,7 @@ class Player {
         this.checkPlatformCollision(platforms);
 
         // はしごとの接触判定
-        this.checkLadderCollision(ladders);
+        this.checkLadderCollision(ladders, keys);
 
         // はしごに乗っている場合の動作
         if (this.onLadder) {
@@ -122,18 +122,39 @@ class Player {
         }
     }
 
-    checkLadderCollision(ladders) {
+    checkLadderCollision(ladders, keys) {
         this.onLadder = false;
+        
+        // keysパラメータがnullまたはundefinedの場合は空オブジェクトとして扱う
+        const safeKeys = keys || {};
         
         for (let ladder of ladders) {
             const playerCenterX = this.x + this.width / 2;
             
+            // 通常の梯子との衝突判定（プレイヤーが梯子の中にいる場合）
             if (playerCenterX > ladder.x &&
                 playerCenterX < ladder.x + CONFIG.LADDER.WIDTH &&
                 this.y + this.height > ladder.y &&
                 this.y < ladder.y + ladder.height) {
                 this.onLadder = true;
                 break;
+            }
+            
+            // 上のステージから梯子を掴む判定
+            // プレイヤーが地面に立っていて、下キーを押している場合
+            // プレイヤーの足元に梯子の上端がある場合、梯子を掴めるようにする
+            if (this.isOnGround && safeKeys['ArrowDown']) {
+                const ladderTopY = ladder.y;
+                const playerBottomY = this.y + this.height;
+                
+                // プレイヤーの足元が梯子の上端付近にあり、水平位置が梯子の範囲内の場合
+                if (playerCenterX > ladder.x &&
+                    playerCenterX < ladder.x + CONFIG.LADDER.WIDTH &&
+                    playerBottomY >= ladderTopY &&
+                    playerBottomY <= ladderTopY + CONFIG.LADDER.GRAB_TOLERANCE) {
+                    this.onLadder = true;
+                    break;
+                }
             }
         }
     }

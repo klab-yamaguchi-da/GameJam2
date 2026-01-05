@@ -86,9 +86,11 @@ class Game {
         
         // 酔っ払い（複数対応）
         this.donkeyKongs = [];
-        const donkeyKongData = levelData.donkeyKongs || [levelData.donkeyKong];
+        const donkeyKongData = levelData.donkeyKongs || (levelData.donkeyKong ? [levelData.donkeyKong] : []);
         for (let dkData of donkeyKongData) {
-            this.donkeyKongs.push(new DonkeyKong(dkData.x, dkData.y));
+            if (dkData && dkData.x !== undefined && dkData.y !== undefined) {
+                this.donkeyKongs.push(new DonkeyKong(dkData.x, dkData.y));
+            }
         }
         
         this.princess = new Princess(
@@ -98,9 +100,11 @@ class Game {
         
         // ゴミ箱（複数対応）
         this.trashBins = [];
-        const trashBinData = levelData.trashBins || [levelData.trashBin];
+        const trashBinData = levelData.trashBins || (levelData.trashBin ? [levelData.trashBin] : []);
         for (let tbData of trashBinData) {
-            this.trashBins.push(new TrashBin(tbData.x, tbData.y));
+            if (tbData && tbData.x !== undefined && tbData.y !== undefined) {
+                this.trashBins.push(new TrashBin(tbData.x, tbData.y));
+            }
         }
         
         this.barrels = [];
@@ -225,6 +229,11 @@ class Game {
     }
 
     spawnBarrel() {
+        // 酔っ払いが存在しない場合は何もしない
+        if (this.donkeyKongs.length === 0) {
+            return;
+        }
+        
         // ランダムに酔っ払いを選択
         const randomDK = this.donkeyKongs[Math.floor(Math.random() * this.donkeyKongs.length)];
         

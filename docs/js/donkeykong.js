@@ -7,6 +7,7 @@ class DonkeyKong {
         this.height = CONFIG.DONKEY_KONG.HEIGHT;
         this.animationFrame = 0;
         this.animationCounter = 0;
+        this.nextBottleDirection = 1; // 次に投げる瓶の方向（1: 右、-1: 左）
     }
 
     update() {
@@ -62,7 +63,65 @@ class DonkeyKong {
         ctx.lineTo(this.x + this.width + 5, this.y + 30 + armOffset);
         ctx.stroke();
         
+        // 次に投げる瓶を手に持って表示
+        this.drawNextBottle(ctx);
+        
         ctx.restore();
+    }
+    
+    // 次に投げる瓶を手に持った状態で描画
+    drawNextBottle(ctx) {
+        ctx.save();
+        
+        // 瓶を持つ手の位置を決定（方向に応じて左右の手）
+        let bottleX, bottleY;
+        if (this.nextBottleDirection === 1) {
+            // 右に投げる場合は右手に持つ
+            bottleX = this.x + this.width + 8;
+            bottleY = this.y + 30 + (this.animationFrame === 0 ? 5 : -5);
+        } else {
+            // 左に投げる場合は左手に持つ
+            bottleX = this.x - 8;
+            bottleY = this.y + 30 + (this.animationFrame === 0 ? 5 : -5);
+        }
+        
+        // 瓶のサイズ（やや小さめ）
+        const bottleRadius = CONFIG.BARREL.RADIUS * 0.8;
+        
+        // 瓶本体（緑色のガラス）
+        ctx.fillStyle = CONFIG.BARREL.COLOR;
+        ctx.fillRect(bottleX - bottleRadius * 0.6, bottleY - bottleRadius, bottleRadius * 1.2, bottleRadius * 2);
+        
+        // 瓶の首部分
+        ctx.fillStyle = '#2d5016';
+        ctx.fillRect(bottleX - bottleRadius * 0.3, bottleY - bottleRadius * 1.3, bottleRadius * 0.6, bottleRadius * 0.3);
+        
+        // キャップ（金色）
+        ctx.fillStyle = '#ffd700';
+        ctx.fillRect(bottleX - bottleRadius * 0.35, bottleY - bottleRadius * 1.5, bottleRadius * 0.7, bottleRadius * 0.2);
+        
+        // ラベル
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(bottleX - bottleRadius * 0.5, bottleY - bottleRadius * 0.3, bottleRadius, bottleRadius * 0.6);
+        
+        // ラベルの文字「酒」
+        ctx.fillStyle = '#ff0000';
+        ctx.font = 'bold 10px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('酒', bottleX, bottleY);
+        
+        ctx.restore();
+    }
+    
+    // 次に投げる瓶の方向を設定
+    setNextBottleDirection(direction) {
+        this.nextBottleDirection = direction;
+    }
+    
+    // 次に投げる瓶の方向を取得
+    getNextBottleDirection() {
+        return this.nextBottleDirection;
     }
 }
 

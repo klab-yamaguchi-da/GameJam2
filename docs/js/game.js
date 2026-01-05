@@ -52,7 +52,7 @@ class Game {
         // ライフのリセット処理
         if (isRetry) {
             // 再チャレンジの場合：前回の開始時ライフ＋１
-            this.startingLives = this.startingLives + 1;
+            this.startingLives++;
             this.lives = this.startingLives;
         } else if (levelIndex === 0) {
             // 初回または最初のレベルに戻る場合

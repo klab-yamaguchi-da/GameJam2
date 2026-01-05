@@ -23,6 +23,8 @@ class Game {
         // タイマー
         this.barrelSpawnTimer = 0;
         this.deathTimer = 0;
+        this.timeLimit = null; // タイムリミット（秒）
+        this.timeLimitTimer = 0; // タイムリミット用タイマー（フレーム数）
         
         this.setupKeyboardControls();
     }
@@ -49,6 +51,10 @@ class Game {
         // レベルデータをロード
         this.platforms = levelData.platforms;
         this.ladders = levelData.ladders;
+        
+        // タイムリミット設定
+        this.timeLimit = levelData.timeLimit || null;
+        this.timeLimitTimer = 0;
         
         // エンティティを初期化
         this.player = new Player(
@@ -95,6 +101,12 @@ class Game {
                         levelData.jumpMultiplier || 1.0
                     );
                     this.barrels = [];
+                    
+                    // タイムリミットがある場合はリセット
+                    if (this.timeLimit !== null) {
+                        this.timeLimitTimer = 0;
+                    }
+                    
                     this.gameState = 'playing';
                     this.deathTimer = 0;
                 }
@@ -104,6 +116,18 @@ class Game {
 
         if (this.gameState !== 'playing') {
             return this.gameState;
+        }
+
+        // タイムリミットチェック
+        if (this.timeLimit !== null) {
+            this.timeLimitTimer++;
+            const elapsedSeconds = this.timeLimitTimer / CONFIG.PHYSICS.FPS;
+            if (elapsedSeconds >= this.timeLimit) {
+                // タイムオーバー
+                this.gameState = 'dead';
+                this.deathTimer = 0;
+                return 'continue';
+            }
         }
 
         // ドンキーコング更新
@@ -243,6 +267,30 @@ class Game {
                 this.player.draw(this.ctx);
             }
         }
+
+        // タイムリミット表示（左下）
+        if (this.timeLimit !== null) {
+            const elapsedSeconds = this.timeLimitTimer / CONFIG.PHYSICS.FPS;
+            const remainingSeconds = Math.max(0, this.timeLimit - elapsedSeconds);
+            
+            this.ctx.save();
+            this.ctx.fillStyle = '#ffffff';
+            this.ctx.font = 'bold 24px monospace';
+            this.ctx.textAlign = 'left';
+            this.ctx.textBaseline = 'bottom';
+            
+            // 残り時間が5秒以下になったら赤色で表示
+            if (remainingSeconds <= 5) {
+                this.ctx.fillStyle = '#ff0000';
+            }
+            
+            this.ctx.fillText(
+                `TIME: ${remainingSeconds.toFixed(1)}`,
+                10,
+                this.canvas.height - 10
+            );
+            this.ctx.restore();
+        }
     }
 
     getScore() {
@@ -255,5 +303,13 @@ class Game {
 
     getLevel() {
         return this.level + 1;
+    }
+
+    getRemainingTime() {
+        if (this.timeLimit === null) {
+            return null;
+        }
+        const elapsedSeconds = this.timeLimitTimer / CONFIG.PHYSICS.FPS;
+        return Math.max(0, this.timeLimit - elapsedSeconds);
     }
 }

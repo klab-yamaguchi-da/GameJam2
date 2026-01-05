@@ -1,6 +1,6 @@
 // ゲームクラス
 class Game {
-    constructor(canvas) {
+    constructor(canvas, audioManager) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.keys = {};
@@ -8,6 +8,7 @@ class Game {
         this.startingLives = CONFIG.INITIAL_LIVES; // ゲーム開始時のライフ数を記録（再チャレンジごとに+1される）
         this.level = 0;
         this.gameState = 'playing'; // 'playing', 'dead', 'clear'
+        this.audioManager = audioManager; // 音響システム
         
         // エンティティ
         this.player = null;
@@ -81,7 +82,8 @@ class Game {
             levelData.playerStart.x,
             levelData.playerStart.y,
             levelData.speedMultiplier ?? 1.0,
-            levelData.jumpMultiplier ?? 1.0
+            levelData.jumpMultiplier ?? 1.0,
+            this.audioManager
         );
         
         // 酔っ払い（複数対応）
@@ -158,6 +160,7 @@ class Game {
             const elapsedSeconds = this.timeLimitTimer / CONFIG.PHYSICS.FPS;
             if (elapsedSeconds >= this.timeLimit) {
                 // タイムオーバー
+                this.audioManager.playDeathSound();
                 this.gameState = 'dead';
                 this.deathTimer = 0;
                 return 'continue';
@@ -175,6 +178,7 @@ class Game {
         // プレイヤー更新
         const playerState = this.player.update(this.keys, this.platforms, this.ladders);
         if (playerState === 'dead') {
+            this.audioManager.playDeathSound();
             this.gameState = 'dead';
             this.deathTimer = 0;
             return 'continue';
@@ -208,6 +212,7 @@ class Game {
 
             // プレイヤーとの衝突判定
             if (barrel.checkCollision(this.player)) {
+                this.audioManager.playDeathSound();
                 this.gameState = 'dead';
                 this.deathTimer = 0;
                 return 'continue';

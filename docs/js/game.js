@@ -44,6 +44,24 @@ class Game {
         });
     }
 
+    // エンティティ配列の初期化ヘルパー（後方互換性対応）
+    initializeEntityArray(EntityClass, pluralKey, singularKey, levelData) {
+        const entities = [];
+        if (Array.isArray(levelData[pluralKey])) {
+            // 配列形式の場合
+            for (let data of levelData[pluralKey]) {
+                entities.push(new EntityClass(data.x, data.y));
+            }
+        } else if (levelData[singularKey]) {
+            // 単一オブジェクト形式の場合（後方互換性）
+            entities.push(new EntityClass(
+                levelData[singularKey].x,
+                levelData[singularKey].y
+            ));
+        }
+        return entities;
+    }
+
     loadLevel(levelIndex, isRetry = false) {
         this.level = levelIndex;
         const levelData = LEVELS[levelIndex];
@@ -76,40 +94,14 @@ class Game {
             levelData.jumpMultiplier ?? 1.0
         );
         
-        // 酔っ払いの初期化（配列に対応）
-        this.donkeyKongs = [];
-        if (Array.isArray(levelData.donkeyKongs)) {
-            // 配列形式の場合
-            for (let dk of levelData.donkeyKongs) {
-                this.donkeyKongs.push(new DonkeyKong(dk.x, dk.y));
-            }
-        } else if (levelData.donkeyKong) {
-            // 単一オブジェクト形式の場合（後方互換性）
-            this.donkeyKongs.push(new DonkeyKong(
-                levelData.donkeyKong.x,
-                levelData.donkeyKong.y
-            ));
-        }
+        // 酔っ払いとゴミ箱の初期化（配列に対応、後方互換性あり）
+        this.donkeyKongs = this.initializeEntityArray(DonkeyKong, 'donkeyKongs', 'donkeyKong', levelData);
+        this.trashBins = this.initializeEntityArray(TrashBin, 'trashBins', 'trashBin', levelData);
         
         this.princess = new Princess(
             levelData.princess.x,
             levelData.princess.y
         );
-        
-        // ゴミ箱の初期化（配列に対応）
-        this.trashBins = [];
-        if (Array.isArray(levelData.trashBins)) {
-            // 配列形式の場合
-            for (let tb of levelData.trashBins) {
-                this.trashBins.push(new TrashBin(tb.x, tb.y));
-            }
-        } else if (levelData.trashBin) {
-            // 単一オブジェクト形式の場合（後方互換性）
-            this.trashBins.push(new TrashBin(
-                levelData.trashBin.x,
-                levelData.trashBin.y
-            ));
-        }
         
         this.barrels = [];
         this.barrelSpawnTimer = 0;
@@ -192,14 +184,7 @@ class Game {
             barrel.update(this.platforms, this.ladders);
 
             // ゴミ箱との衝突判定（全てのゴミ箱をチェック）
-            let collided = false;
-            for (let trashBin of this.trashBins) {
-                if (trashBin.checkCollision(barrel)) {
-                    collided = true;
-                    break;
-                }
-            }
-            if (collided) {
+            if (this.trashBins.some(trashBin => trashBin.checkCollision(barrel))) {
                 this.barrels.splice(i, 1);
                 continue;
             }

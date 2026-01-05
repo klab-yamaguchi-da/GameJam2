@@ -12,9 +12,9 @@ class Game {
         // エンティティ
         this.player = null;
         this.barrels = [];
-        this.donkeyKong = null;
+        this.donkeyKongs = []; // 複数の酔っ払いをサポート
         this.princess = null;
-        this.trashBin = null;
+        this.trashBins = []; // 複数のゴミ箱をサポート
         
         // レベルデータ
         this.platforms = [];
@@ -84,28 +84,34 @@ class Game {
             levelData.jumpMultiplier ?? 1.0
         );
         
-        this.donkeyKong = new DonkeyKong(
-            levelData.donkeyKong.x,
-            levelData.donkeyKong.y
-        );
+        // 酔っ払い（複数対応）
+        this.donkeyKongs = [];
+        const donkeyKongData = levelData.donkeyKongs || [levelData.donkeyKong];
+        for (let dkData of donkeyKongData) {
+            this.donkeyKongs.push(new DonkeyKong(dkData.x, dkData.y));
+        }
         
         this.princess = new Princess(
             levelData.princess.x,
             levelData.princess.y
         );
         
-        this.trashBin = new TrashBin(
-            levelData.trashBin.x,
-            levelData.trashBin.y
-        );
+        // ゴミ箱（複数対応）
+        this.trashBins = [];
+        const trashBinData = levelData.trashBins || [levelData.trashBin];
+        for (let tbData of trashBinData) {
+            this.trashBins.push(new TrashBin(tbData.x, tbData.y));
+        }
         
         this.barrels = [];
         this.barrelSpawnTimer = 0;
         this.gameState = 'playing';
         
-        // 次の瓶の方向を決定してDonkeyKongに設定
+        // 次の瓶の方向を決定して全てのDonkeyKongに設定
         this.nextBarrelDirection = this.generateRandomDirection();
-        this.donkeyKong.setNextBottleDirection(this.nextBarrelDirection);
+        for (let dk of this.donkeyKongs) {
+            dk.setNextBottleDirection(this.nextBarrelDirection);
+        }
     }
 
     update() {
@@ -154,8 +160,10 @@ class Game {
             }
         }
 
-        // ドンキーコング更新
-        this.donkeyKong.update();
+        // ドンキーコング更新（複数対応）
+        for (let dk of this.donkeyKongs) {
+            dk.update();
+        }
         
         // プリンセス更新
         this.princess.update();
@@ -181,8 +189,15 @@ class Game {
             const barrel = this.barrels[i];
             barrel.update(this.platforms, this.ladders);
 
-            // ゴミ箱との衝突判定
-            if (this.trashBin.checkCollision(barrel)) {
+            // ゴミ箱との衝突判定（複数対応）
+            let collectedByTrashBin = false;
+            for (let trashBin of this.trashBins) {
+                if (trashBin.checkCollision(barrel)) {
+                    collectedByTrashBin = true;
+                    break;
+                }
+            }
+            if (collectedByTrashBin) {
                 this.barrels.splice(i, 1);
                 continue;
             }
@@ -210,17 +225,22 @@ class Game {
     }
 
     spawnBarrel() {
+        // ランダムに酔っ払いを選択
+        const randomDK = this.donkeyKongs[Math.floor(Math.random() * this.donkeyKongs.length)];
+        
         // 事前に決定された方向で瓶を生成
         const barrel = new Barrel(
-            this.donkeyKong.x + this.donkeyKong.width / 2,
-            this.donkeyKong.y + this.donkeyKong.height,
+            randomDK.x + randomDK.width / 2,
+            randomDK.y + randomDK.height,
             this.nextBarrelDirection
         );
         this.barrels.push(barrel);
         
         // 瓶を投げた後、すぐに次の瓶の方向を決定
         this.nextBarrelDirection = this.generateRandomDirection();
-        this.donkeyKong.setNextBottleDirection(this.nextBarrelDirection);
+        for (let dk of this.donkeyKongs) {
+            dk.setNextBottleDirection(this.nextBarrelDirection);
+        }
     }
 
     draw() {
@@ -270,14 +290,18 @@ class Game {
             }
         }
 
-        // ドンキーコング描画
-        this.donkeyKong.draw(this.ctx);
+        // ドンキーコング描画（複数対応）
+        for (let dk of this.donkeyKongs) {
+            dk.draw(this.ctx);
+        }
         
         // プリンセス描画
         this.princess.draw(this.ctx);
         
-        // ゴミ箱描画
-        this.trashBin.draw(this.ctx);
+        // ゴミ箱描画（複数対応）
+        for (let trashBin of this.trashBins) {
+            trashBin.draw(this.ctx);
+        }
 
         // タル描画
         for (let barrel of this.barrels) {

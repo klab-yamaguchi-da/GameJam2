@@ -68,7 +68,8 @@ class Player {
         }
 
         // ジャンプ（地面に立っている場合のみ、はしごの上でもジャンプ可能）
-        if (keys[' '] && this.isOnGround) {
+        // jumpMultiplierが0の場合はジャンプ禁止
+        if (keys[' '] && this.isOnGround && this.jumpMultiplier > 0) {
             this.velocityY = -CONFIG.PLAYER.JUMP_POWER * this.jumpMultiplier;
             this.isJumping = true;
             this.isOnGround = false;

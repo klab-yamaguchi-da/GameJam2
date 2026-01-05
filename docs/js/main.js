@@ -97,7 +97,7 @@ class GameManager {
             // 次のステージのストーリーを表示
             this.showStory(nextLevel);
         } else {
-            // すべてのステージをクリア - エンディング画面を表示
+            // すべてのステージをクリア - ゲームクリア画面を表示
             this.showGameClear();
         }
     }

@@ -223,20 +223,23 @@ button:active {
 }
 
 .game-clear-title {
+    --shadow-base: 4px 4px 8px rgba(0, 0, 0, 0.9);
+    --glow-min: 0 0 20px rgba(255, 0, 0, 0.5);
+    --glow-max: 0 0 40px rgba(255, 0, 0, 0.8);
     font-size: 56px;
     margin-bottom: 40px;
     color: #ff0000;
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 0, 0, 0.5);
+    text-shadow: var(--shadow-base), var(--glow-min);
     font-weight: bold;
     animation: glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
     from {
-        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 0, 0, 0.5);
+        text-shadow: var(--shadow-base), var(--glow-min);
     }
     to {
-        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.8);
+        text-shadow: var(--shadow-base), var(--glow-max);
     }
 }
 

@@ -5,6 +5,7 @@ class GameManager {
         this.game = null;
         this.gameLoop = null;
         this.currentScreen = 'title';
+        this.isRetry = false; // 再チャレンジフラグ
         
         this.setupUI();
     }
@@ -22,6 +23,7 @@ class GameManager {
 
         // リスタートボタン
         document.getElementById('restart-button').addEventListener('click', () => {
+            this.isRetry = true; // 再チャレンジフラグをセット
             this.showStory(0);
         });
 
@@ -66,9 +68,12 @@ class GameManager {
             this.game = new Game(this.canvas);
         }
         
-        // 指定されたレベルをロード
+        // 指定されたレベルをロード（再チャレンジフラグを渡す）
         const levelToLoad = this.nextLevelIndex ?? 0;
-        this.game.loadLevel(levelToLoad);
+        this.game.loadLevel(levelToLoad, this.isRetry);
+        
+        // 再チャレンジフラグをリセット
+        this.isRetry = false;
         
         // UI更新
         this.updateUI();
@@ -119,19 +124,16 @@ class GameManager {
 
     updateUI() {
         if (this.game) {
-            document.getElementById('score-value').textContent = this.game.getScore();
             document.getElementById('lives-value').textContent = this.game.getLives();
             document.getElementById('level-value').textContent = this.game.getLevel();
         }
     }
 
     showGameOver() {
-        document.getElementById('final-score').textContent = this.game.getScore();
         this.showScreen('game-over');
     }
 
     showStageClear() {
-        document.getElementById('stage-score').textContent = this.game.getScore();
         this.showScreen('stage-clear');
     }
 }

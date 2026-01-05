@@ -4,8 +4,8 @@ class Game {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.keys = {};
-        this.score = 0;
         this.lives = CONFIG.INITIAL_LIVES;
+        this.startingLives = CONFIG.INITIAL_LIVES; // ゲーム開始時のライフ数を記録（再チャレンジごとに+1される）
         this.level = 0;
         this.gameState = 'playing'; // 'playing', 'dead', 'clear'
         
@@ -44,9 +44,21 @@ class Game {
         });
     }
 
-    loadLevel(levelIndex) {
+    loadLevel(levelIndex, isRetry = false) {
         this.level = levelIndex;
         const levelData = LEVELS[levelIndex];
+        
+        // ライフのリセット処理
+        if (isRetry) {
+            // 再チャレンジの場合：前回の開始時ライフ＋１
+            this.startingLives++;
+            this.lives = this.startingLives;
+        } else if (levelIndex === 0) {
+            // 初回または最初のレベルに戻る場合
+            this.startingLives = CONFIG.INITIAL_LIVES;
+            this.lives = this.startingLives;
+        }
+        // それ以外（ステージクリア後の次レベル）はライフを維持
         
         // レベルデータをロード
         this.platforms = levelData.platforms;
@@ -160,7 +172,6 @@ class Game {
             // ゴミ箱との衝突判定
             if (this.trashBin.checkCollision(barrel)) {
                 this.barrels.splice(i, 1);
-                this.score += CONFIG.POINTS_PER_BARREL;
                 continue;
             }
 
@@ -174,13 +185,11 @@ class Game {
             // 非アクティブなタルを削除
             if (!barrel.active) {
                 this.barrels.splice(i, 1);
-                this.score += CONFIG.POINTS_PER_BARREL;
             }
         }
 
         // ゴール判定
         if (this.player.checkGoalCollision(this.princess)) {
-            this.score += CONFIG.POINTS_PER_LEVEL;
             this.gameState = 'clear';
             return 'stageClear';
         }
@@ -291,10 +300,6 @@ class Game {
             );
             this.ctx.restore();
         }
-    }
-
-    getScore() {
-        return this.score;
     }
 
     getLives() {

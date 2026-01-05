@@ -67,8 +67,6 @@ const CONFIG = {
     
     // ゲームルール
     INITIAL_LIVES: 3,
-    POINTS_PER_BARREL: 100,
-    POINTS_PER_LEVEL: 1000,
     
     // 物理
     PHYSICS: {

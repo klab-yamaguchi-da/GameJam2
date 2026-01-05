@@ -124,19 +124,16 @@ class GameManager {
 
     updateUI() {
         if (this.game) {
-            document.getElementById('score-value').textContent = this.game.getScore();
             document.getElementById('lives-value').textContent = this.game.getLives();
             document.getElementById('level-value').textContent = this.game.getLevel();
         }
     }
 
     showGameOver() {
-        document.getElementById('final-score').textContent = this.game.getScore();
         this.showScreen('game-over');
     }
 
     showStageClear() {
-        document.getElementById('stage-score').textContent = this.game.getScore();
         this.showScreen('stage-clear');
     }
 }

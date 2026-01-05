@@ -4,7 +4,6 @@ class Game {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.keys = {};
-        this.score = 0;
         this.lives = CONFIG.INITIAL_LIVES;
         this.startingLives = CONFIG.INITIAL_LIVES; // ゲーム開始時のライフ数を記録
         this.level = 0;
@@ -173,7 +172,6 @@ class Game {
             // ゴミ箱との衝突判定
             if (this.trashBin.checkCollision(barrel)) {
                 this.barrels.splice(i, 1);
-                this.score += CONFIG.POINTS_PER_BARREL;
                 continue;
             }
 
@@ -187,13 +185,11 @@ class Game {
             // 非アクティブなタルを削除
             if (!barrel.active) {
                 this.barrels.splice(i, 1);
-                this.score += CONFIG.POINTS_PER_BARREL;
             }
         }
 
         // ゴール判定
         if (this.player.checkGoalCollision(this.princess)) {
-            this.score += CONFIG.POINTS_PER_LEVEL;
             this.gameState = 'clear';
             return 'stageClear';
         }
@@ -304,10 +300,6 @@ class Game {
             );
             this.ctx.restore();
         }
-    }
-
-    getScore() {
-        return this.score;
     }
 
     getLives() {

@@ -6,6 +6,7 @@ class Game {
         this.keys = {};
         this.score = 0;
         this.lives = CONFIG.INITIAL_LIVES;
+        this.startingLives = CONFIG.INITIAL_LIVES; // ゲーム開始時のライフ数を記録
         this.level = 0;
         this.gameState = 'playing'; // 'playing', 'dead', 'clear'
         
@@ -44,9 +45,21 @@ class Game {
         });
     }
 
-    loadLevel(levelIndex) {
+    loadLevel(levelIndex, isRetry = false) {
         this.level = levelIndex;
         const levelData = LEVELS[levelIndex];
+        
+        // ライフのリセット処理
+        if (isRetry) {
+            // 再チャレンジの場合：前回の開始時ライフ＋１
+            this.startingLives = this.startingLives + 1;
+            this.lives = this.startingLives;
+        } else if (levelIndex === 0) {
+            // 初回または最初のレベルに戻る場合
+            this.startingLives = CONFIG.INITIAL_LIVES;
+            this.lives = this.startingLives;
+        }
+        // それ以外（ステージクリア後の次レベル）はライフを維持
         
         // レベルデータをロード
         this.platforms = levelData.platforms;

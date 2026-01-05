@@ -5,7 +5,7 @@ class Game {
         this.ctx = canvas.getContext('2d');
         this.keys = {};
         this.lives = CONFIG.INITIAL_LIVES;
-        this.startingLives = CONFIG.INITIAL_LIVES; // ゲーム開始時のライフ数を記録
+        this.startingLives = CONFIG.INITIAL_LIVES; // ゲーム開始時のライフ数を記録（再チャレンジごとに+1される）
         this.level = 0;
         this.gameState = 'playing'; // 'playing', 'dead', 'clear'
         

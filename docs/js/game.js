@@ -12,9 +12,9 @@ class Game {
         // エンティティ
         this.player = null;
         this.barrels = [];
-        this.donkeyKong = null;
+        this.donkeyKongs = []; // 複数の酔っ払いに対応
         this.princess = null;
-        this.trashBin = null;
+        this.trashBins = []; // 複数のゴミ箱に対応
         
         // レベルデータ
         this.platforms = [];
@@ -76,20 +76,40 @@ class Game {
             levelData.jumpMultiplier ?? 1.0
         );
         
-        this.donkeyKong = new DonkeyKong(
-            levelData.donkeyKong.x,
-            levelData.donkeyKong.y
-        );
+        // 酔っ払いの初期化（配列に対応）
+        this.donkeyKongs = [];
+        if (Array.isArray(levelData.donkeyKongs)) {
+            // 配列形式の場合
+            for (let dk of levelData.donkeyKongs) {
+                this.donkeyKongs.push(new DonkeyKong(dk.x, dk.y));
+            }
+        } else if (levelData.donkeyKong) {
+            // 単一オブジェクト形式の場合（後方互換性）
+            this.donkeyKongs.push(new DonkeyKong(
+                levelData.donkeyKong.x,
+                levelData.donkeyKong.y
+            ));
+        }
         
         this.princess = new Princess(
             levelData.princess.x,
             levelData.princess.y
         );
         
-        this.trashBin = new TrashBin(
-            levelData.trashBin.x,
-            levelData.trashBin.y
-        );
+        // ゴミ箱の初期化（配列に対応）
+        this.trashBins = [];
+        if (Array.isArray(levelData.trashBins)) {
+            // 配列形式の場合
+            for (let tb of levelData.trashBins) {
+                this.trashBins.push(new TrashBin(tb.x, tb.y));
+            }
+        } else if (levelData.trashBin) {
+            // 単一オブジェクト形式の場合（後方互換性）
+            this.trashBins.push(new TrashBin(
+                levelData.trashBin.x,
+                levelData.trashBin.y
+            ));
+        }
         
         this.barrels = [];
         this.barrelSpawnTimer = 0;
@@ -142,8 +162,10 @@ class Game {
             }
         }
 
-        // ドンキーコング更新
-        this.donkeyKong.update();
+        // 酔っ払い更新
+        for (let donkeyKong of this.donkeyKongs) {
+            donkeyKong.update();
+        }
         
         // プリンセス更新
         this.princess.update();
@@ -169,8 +191,15 @@ class Game {
             const barrel = this.barrels[i];
             barrel.update(this.platforms, this.ladders);
 
-            // ゴミ箱との衝突判定
-            if (this.trashBin.checkCollision(barrel)) {
+            // ゴミ箱との衝突判定（全てのゴミ箱をチェック）
+            let collided = false;
+            for (let trashBin of this.trashBins) {
+                if (trashBin.checkCollision(barrel)) {
+                    collided = true;
+                    break;
+                }
+            }
+            if (collided) {
                 this.barrels.splice(i, 1);
                 continue;
             }
@@ -198,9 +227,13 @@ class Game {
     }
 
     spawnBarrel() {
+        // ランダムに酔っ払いを選択してタルを生成
+        if (this.donkeyKongs.length === 0) return;
+        
+        const donkeyKong = this.donkeyKongs[Math.floor(Math.random() * this.donkeyKongs.length)];
         const barrel = new Barrel(
-            this.donkeyKong.x + this.donkeyKong.width / 2,
-            this.donkeyKong.y + this.donkeyKong.height,
+            donkeyKong.x + donkeyKong.width / 2,
+            donkeyKong.y + donkeyKong.height,
             Math.random() < 0.5 ? 1 : -1
         );
         this.barrels.push(barrel);
@@ -253,14 +286,18 @@ class Game {
             }
         }
 
-        // ドンキーコング描画
-        this.donkeyKong.draw(this.ctx);
+        // 酔っ払い描画
+        for (let donkeyKong of this.donkeyKongs) {
+            donkeyKong.draw(this.ctx);
+        }
         
         // プリンセス描画
         this.princess.draw(this.ctx);
         
         // ゴミ箱描画
-        this.trashBin.draw(this.ctx);
+        for (let trashBin of this.trashBins) {
+            trashBin.draw(this.ctx);
+        }
 
         // タル描画
         for (let barrel of this.barrels) {

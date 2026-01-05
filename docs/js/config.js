@@ -164,12 +164,18 @@ const LEVELS = [
             // 2段目、3段目、4段目に長さ20のはしごを1つずつ追加配置
             { x: 400, y: 480, height: 20 },  // 2段目
             { x: 300, y: 380, height: 20 },  // 3段目
-            { x: 400, y: 280, height: 20 }   // 4段目
+            { x: 370, y: 280, height: 20 }   // 4段目（30左にずらした）
         ],
-        donkeyKong: { x: 300, y: 30 },
+        donkeyKongs: [
+            { x: 300, y: 30 },   // 最上層の酔っ払い
+            { x: 10, y: 330 }    // 3段目の左端の酔っ払い
+        ],
         princess: { x: 700, y: 50 },
         playerStart: { x: 730, y: 550 },
-        trashBin: { x: 750, y: 530 }, // 最下層の右端
+        trashBins: [
+            { x: 750, y: 530 },  // 最下層の右端
+            { x: 160, y: 230 }   // 4段目の左端
+        ],
         speedMultiplier: 1.0,
         jumpMultiplier: 0, // ジャンプ不可
         storyMessage: '次の荷物は重いけど台車がある'

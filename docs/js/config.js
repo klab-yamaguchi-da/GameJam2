@@ -138,7 +138,7 @@ const LEVELS = [
         princess: { x: 400, y: 50 },
         playerStart: { x: 50, y: 550 },
         trashBin: { x: 750, y: 530 }, // 最下層の右端
-        speedMultiplier: 0.7,
+        speedMultiplier: 0.5,
         jumpMultiplier: 1.5,
         storyMessage: '次の荷物は軽いけどゆっくり運ばなきゃ'
     },

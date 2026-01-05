@@ -19,7 +19,6 @@ class Player {
         // 歩行SE用のカウンター
         this.walkSoundCounter = 0;
         this.walkSoundInterval = 15; // フレーム数（歩行SEの間隔）
-        this.wasMoving = false;
     }
 
     update(keys, platforms, ladders) {
@@ -251,6 +250,5 @@ class Player {
         this.speedMultiplier = speedMultiplier;
         this.jumpMultiplier = jumpMultiplier;
         this.walkSoundCounter = 0;
-        this.wasMoving = false;
     }
 }

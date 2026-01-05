@@ -11,6 +11,9 @@ class AudioManager {
         this.bgmBuffer = null;
         this.currentBgmType = null;
         
+        // BGMバッファのキャッシュ
+        this.cachedBgmBuffers = {};
+        
         // SE用のサウンドバッファ
         this.soundBuffers = {};
         
@@ -388,12 +391,19 @@ class AudioManager {
         this.stopBGM();
         
         try {
-            // BGMタイプに応じてバッファを生成
+            // BGMタイプに応じてバッファを生成またはキャッシュから取得
             let buffer;
-            if (bgmType === 'gameclear') {
-                buffer = this.generateGameClearMusic();
+            if (this.cachedBgmBuffers[bgmType]) {
+                // キャッシュされたバッファを使用
+                buffer = this.cachedBgmBuffers[bgmType];
             } else {
-                buffer = this.generateLevelBGM();
+                // バッファを生成してキャッシュ
+                if (bgmType === 'gameclear') {
+                    buffer = this.generateGameClearMusic();
+                } else {
+                    buffer = this.generateLevelBGM();
+                }
+                this.cachedBgmBuffers[bgmType] = buffer;
             }
             
             this.bgmBuffer = buffer;

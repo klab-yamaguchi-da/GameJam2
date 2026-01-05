@@ -118,11 +118,6 @@ class DonkeyKong {
     setNextBottleDirection(direction) {
         this.nextBottleDirection = direction;
     }
-    
-    // 次に投げる瓶の方向を取得
-    getNextBottleDirection() {
-        return this.nextBottleDirection;
-    }
 }
 
 // プリンセスクラス

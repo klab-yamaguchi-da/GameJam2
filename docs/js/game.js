@@ -27,9 +27,14 @@ class Game {
         this.timeLimitTimer = 0; // タイムリミット用タイマー（フレーム数）
         
         // 次の瓶の方向を事前に決定
-        this.nextBarrelDirection = Math.random() < 0.5 ? 1 : -1;
+        this.nextBarrelDirection = this.generateRandomDirection();
         
         this.setupKeyboardControls();
+    }
+
+    // ランダムな瓶の方向を生成（1: 右、-1: 左）
+    generateRandomDirection() {
+        return Math.random() < 0.5 ? 1 : -1;
     }
 
     setupKeyboardControls() {
@@ -99,7 +104,7 @@ class Game {
         this.gameState = 'playing';
         
         // 次の瓶の方向を決定してDonkeyKongに設定
-        this.nextBarrelDirection = Math.random() < 0.5 ? 1 : -1;
+        this.nextBarrelDirection = this.generateRandomDirection();
         this.donkeyKong.setNextBottleDirection(this.nextBarrelDirection);
     }
 
@@ -214,7 +219,7 @@ class Game {
         this.barrels.push(barrel);
         
         // 瓶を投げた後、すぐに次の瓶の方向を決定
-        this.nextBarrelDirection = Math.random() < 0.5 ? 1 : -1;
+        this.nextBarrelDirection = this.generateRandomDirection();
         this.donkeyKong.setNextBottleDirection(this.nextBarrelDirection);
     }
 

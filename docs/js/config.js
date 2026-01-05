@@ -158,11 +158,16 @@ const LEVELS = [
         ],
         ladders: [
             // 各はしご: {x, y, height}
+            // 既存のはしご（長さ100）
             { x: 150, y: 480, height: 100 },
             { x: 600, y: 380, height: 100 },
             { x: 200, y: 280, height: 100 },
             { x: 500, y: 180, height: 100 },
-            { x: 300, y: 80, height: 100 }
+            { x: 300, y: 80, height: 100 },
+            // 2段目、3段目、4段目に長さ20のはしごを1つずつ追加配置
+            { x: 400, y: 480, height: 20 },  // 2段目
+            { x: 300, y: 380, height: 20 },  // 3段目
+            { x: 400, y: 280, height: 20 }   // 4段目
         ],
         donkeyKong: { x: 300, y: 30 },
         princess: { x: 700, y: 50 },

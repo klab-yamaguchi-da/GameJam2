@@ -127,11 +127,10 @@ const LEVELS = [
             { x: 150, y: 380, height: 100 },
             // 4層目の各プラットフォームの下に長さ40のはしご
             { x: 0, y: 280, height: 40 },
-            { x: 150, y: 280, height: 40 },
             { x: 300, y: 280, height: 40 },
             { x: 450, y: 280, height: 40 },
             { x: 600, y: 280, height: 40 },
-            { x: 250, y: 180, height: 100 },
+            { x: 200, y: 180, height: 100 },
             { x: 750, y: 180, height: 200 },  // 5層目右端から50の位置に長さ200のはしご
             { x: 450, y: 80, height: 100 }
         ],
@@ -139,7 +138,7 @@ const LEVELS = [
         princess: { x: 400, y: 50 },
         playerStart: { x: 50, y: 550 },
         trashBin: { x: 750, y: 530 }, // 最下層の右端
-        speedMultiplier: 0.7,
+        speedMultiplier: 0.5,
         jumpMultiplier: 1.5,
         storyMessage: '次の荷物は軽いけどゆっくり運ばなきゃ'
     },

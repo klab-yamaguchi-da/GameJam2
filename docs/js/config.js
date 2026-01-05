@@ -100,7 +100,7 @@ const LEVELS = [
         donkeyKong: { x: 300, y: 30 },
         princess: { x: 700, y: 50 },
         playerStart: { x: 730, y: 550 },
-        trashBin: { x: 750, y: 530 }, // 最下層の右端
+        trashBin: { x: 10, y: 530 }, // 最下層の左端
         speedMultiplier: 1.0,
         jumpMultiplier: 1.0,
         storyMessage: '引っ越しの最後の荷物を４つ運び忘れていた！けど、もう引っ越し先で引っ越し祝いの宴会が始まっている。飲みたくなっちゃうので酒瓶を避けながら荷物運びしよう。'

@@ -144,5 +144,71 @@ const LEVELS = [
         speedMultiplier: 0.7,
         jumpMultiplier: 1.5,
         storyMessage: '次の荷物は軽いけどゆっくり運ばなきゃ'
+    },
+    {
+        // LEVEL 3
+        platforms: [
+            // 各プラットフォーム: {x, y, width}
+            { x: 0, y: 580, width: 800 },      // 最下層
+            { x: 100, y: 480, width: 700 },    // 2層目
+            { x: 0, y: 380, width: 650 },      // 3層目
+            { x: 150, y: 280, width: 650 },    // 4層目
+            { x: 0, y: 180, width: 550 },      // 5層目
+            { x: 250, y: 80, width: 550 }      // 最上層
+        ],
+        ladders: [
+            // 各はしご: {x, y, height}
+            { x: 150, y: 480, height: 100 },
+            { x: 600, y: 380, height: 100 },
+            { x: 200, y: 280, height: 100 },
+            { x: 500, y: 180, height: 100 },
+            { x: 300, y: 80, height: 100 }
+        ],
+        donkeyKong: { x: 300, y: 30 },
+        princess: { x: 700, y: 50 },
+        playerStart: { x: 730, y: 550 },
+        trashBin: { x: 750, y: 530 }, // 最下層の右端
+        speedMultiplier: 1.0,
+        jumpMultiplier: 0, // ジャンプ不可
+        storyMessage: '次の荷物は重いけど台車がある'
+    },
+    {
+        // LEVEL 4
+        platforms: [
+            // 各プラットフォーム: {x, y, width}
+            { x: 0, y: 580, width: 800 },      // 最下層
+            { x: 0, y: 480, width: 700 },      // 2層目
+            { x: 100, y: 380, width: 700 },    // 3層目
+            // 4層目: 幅30の複数プラットフォーム
+            { x: 0, y: 280, width: 30 },
+            { x: 150, y: 280, width: 30 },
+            { x: 300, y: 280, width: 30 },
+            { x: 450, y: 280, width: 30 },
+            { x: 600, y: 280, width: 30 },
+            { x: 200, y: 180, width: 600 },    // 5層目
+            { x: 0, y: 80, width: 500 }        // 最上層
+        ],
+        ladders: [
+            // 各はしご: {x, y, height}
+            { x: 650, y: 480, height: 100 },
+            { x: 150, y: 380, height: 100 },
+            // 4層目の各プラットフォームの下に長さ40のはしご
+            { x: 0, y: 280, height: 40 },
+            { x: 150, y: 280, height: 40 },
+            { x: 300, y: 280, height: 40 },
+            { x: 450, y: 280, height: 40 },
+            { x: 600, y: 280, height: 40 },
+            { x: 250, y: 180, height: 100 },
+            { x: 750, y: 180, height: 200 },  // 5層目右端から50の位置に長さ200のはしご
+            { x: 450, y: 80, height: 100 }
+        ],
+        donkeyKong: { x: 100, y: 30 },
+        princess: { x: 400, y: 50 },
+        playerStart: { x: 50, y: 550 },
+        trashBin: { x: 750, y: 530 }, // 最下層の右端
+        speedMultiplier: 1.0,
+        jumpMultiplier: 1.0,
+        timeLimit: 20, // 20秒のタイムリミット
+        storyMessage: '最後の荷物は急がなきゃ'
     }
 ];

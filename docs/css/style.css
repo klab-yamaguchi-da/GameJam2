@@ -217,6 +217,40 @@ button:active {
     font-weight: bold;
 }
 
+/* ゲームクリア画面 */
+#game-clear-screen {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+}
+
+.game-clear-title {
+    font-size: 56px;
+    margin-bottom: 40px;
+    color: #ff0000;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 0, 0, 0.5);
+    font-weight: bold;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 0, 0, 0.5);
+    }
+    to {
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.8);
+    }
+}
+
+.game-clear-message {
+    font-size: 26px;
+    line-height: 1.8;
+    margin: 20px 0 40px 0;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    max-width: 600px;
+    padding: 0 20px;
+    text-align: center;
+}
+
 /* レスポンシブデザイン: モバイル対応 */
 @media (max-width: 850px) {
     body {

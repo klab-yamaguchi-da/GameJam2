@@ -31,6 +31,11 @@ class GameManager {
         document.getElementById('next-stage-button').addEventListener('click', () => {
             this.nextStage();
         });
+
+        // ゲームクリアボタン
+        document.getElementById('game-clear-button').addEventListener('click', () => {
+            this.showScreen('title');
+        });
     }
 
     showScreen(screenName) {
@@ -92,8 +97,8 @@ class GameManager {
             // 次のステージのストーリーを表示
             this.showStory(nextLevel);
         } else {
-            // すべてのステージをクリア
-            this.showGameOver();
+            // すべてのステージをクリア - エンディング画面を表示
+            this.showGameClear();
         }
     }
 
@@ -135,6 +140,10 @@ class GameManager {
 
     showStageClear() {
         this.showScreen('stage-clear');
+    }
+
+    showGameClear() {
+        this.showScreen('game-clear');
     }
 }
 

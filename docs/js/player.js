@@ -115,7 +115,9 @@ class Player {
                 this.y + this.height >= platform.y &&
                 this.y + this.height <= platform.y + CONFIG.PLATFORM.HEIGHT + Math.abs(this.velocityY)) {
                 
-                if (this.velocityY >= 0) { // 落下中のみ
+                // はしご登り降り中はプラットフォームへのスナップを無効化
+                // これにより、プラットフォームの上からはしごを掴んで降りることができる
+                if (this.velocityY >= 0 && !this.isClimbing) { // 落下中のみ、かつはしご登り降り中でない場合
                     this.y = platform.y - this.height;
                     this.velocityY = 0;
                     this.isJumping = false;

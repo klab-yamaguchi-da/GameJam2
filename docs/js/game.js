@@ -60,8 +60,8 @@ class Game {
         this.player = new Player(
             levelData.playerStart.x,
             levelData.playerStart.y,
-            levelData.speedMultiplier || 1.0,
-            levelData.jumpMultiplier || 1.0
+            levelData.speedMultiplier ?? 1.0,
+            levelData.jumpMultiplier ?? 1.0
         );
         
         this.donkeyKong = new DonkeyKong(
@@ -97,8 +97,8 @@ class Game {
                     this.player.reset(
                         levelData.playerStart.x,
                         levelData.playerStart.y,
-                        levelData.speedMultiplier || 1.0,
-                        levelData.jumpMultiplier || 1.0
+                        levelData.speedMultiplier ?? 1.0,
+                        levelData.jumpMultiplier ?? 1.0
                     );
                     this.barrels = [];
                     

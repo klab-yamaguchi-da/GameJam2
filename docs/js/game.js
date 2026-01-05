@@ -26,7 +26,15 @@ class Game {
         this.timeLimit = null; // タイムリミット（秒）
         this.timeLimitTimer = 0; // タイムリミット用タイマー（フレーム数）
         
+        // 次の瓶の方向を事前に決定
+        this.nextBarrelDirection = this.generateRandomDirection();
+        
         this.setupKeyboardControls();
+    }
+
+    // ランダムな瓶の方向を生成（1: 右、-1: 左）
+    generateRandomDirection() {
+        return Math.random() < 0.5 ? 1 : -1;
     }
 
     setupKeyboardControls() {
@@ -106,6 +114,12 @@ class Game {
         this.barrels = [];
         this.barrelSpawnTimer = 0;
         this.gameState = 'playing';
+        
+        // 次の瓶の方向を決定して全てのDonkeyKongに設定
+        this.nextBarrelDirection = this.generateRandomDirection();
+        for (let donkeyKong of this.donkeyKongs) {
+            donkeyKong.setNextBottleDirection(this.nextBarrelDirection);
+        }
     }
 
     update() {
@@ -216,12 +230,20 @@ class Game {
         if (this.donkeyKongs.length === 0) return;
         
         const donkeyKong = this.donkeyKongs[Math.floor(Math.random() * this.donkeyKongs.length)];
+        
+        // 事前に決定された方向で瓶を生成
         const barrel = new Barrel(
             donkeyKong.x + donkeyKong.width / 2,
             donkeyKong.y + donkeyKong.height,
-            Math.random() < 0.5 ? 1 : -1
+            this.nextBarrelDirection
         );
         this.barrels.push(barrel);
+        
+        // 瓶を投げた後、すぐに次の瓶の方向を決定
+        this.nextBarrelDirection = this.generateRandomDirection();
+        for (let dk of this.donkeyKongs) {
+            dk.setNextBottleDirection(this.nextBarrelDirection);
+        }
     }
 
     draw() {

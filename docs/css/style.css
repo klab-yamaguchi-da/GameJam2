@@ -217,6 +217,43 @@ button:active {
     font-weight: bold;
 }
 
+/* ゲームクリア画面 */
+#game-clear-screen {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+}
+
+.game-clear-title {
+    --shadow-base: 4px 4px 8px rgba(0, 0, 0, 0.9);
+    --glow-min: 0 0 20px rgba(255, 0, 0, 0.5);
+    --glow-max: 0 0 40px rgba(255, 0, 0, 0.8);
+    font-size: 56px;
+    margin-bottom: 40px;
+    color: #ff0000;
+    text-shadow: var(--shadow-base), var(--glow-min);
+    font-weight: bold;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: var(--shadow-base), var(--glow-min);
+    }
+    to {
+        text-shadow: var(--shadow-base), var(--glow-max);
+    }
+}
+
+.game-clear-message {
+    font-size: 26px;
+    line-height: 1.8;
+    margin: 20px 0 40px 0;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    max-width: 600px;
+    padding: 0 20px;
+    text-align: center;
+}
+
 /* レスポンシブデザイン: モバイル対応 */
 @media (max-width: 850px) {
     body {
@@ -259,5 +296,16 @@ button:active {
     #game-canvas {
         width: 100%;
         height: auto;
+    }
+
+    .game-clear-title {
+        font-size: 36px;
+        margin-bottom: 30px;
+    }
+
+    .game-clear-message {
+        font-size: 18px;
+        margin: 15px 0 30px 0;
+        padding: 0 15px;
     }
 }

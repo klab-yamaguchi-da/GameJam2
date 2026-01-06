@@ -253,6 +253,79 @@ class AudioManager {
         return buffer;
     }
     
+    // ゲームオーバー用5秒ミュージック生成（悲しい下降メロディ）
+    generateGameOverMusic() {
+        const duration = 5;
+        const sampleRate = this.audioContext.sampleRate;
+        const buffer = this.audioContext.createBuffer(1, duration * sampleRate, sampleRate);
+        const data = buffer.getChannelData(0);
+        
+        // 悲しい下降メロディ（ゲームオーバー風）
+        const melody = [
+            { freq: 659.25, start: 0.0, duration: 0.4 },   // E
+            { freq: 587.33, start: 0.5, duration: 0.4 },   // D
+            { freq: 523.25, start: 1.0, duration: 0.4 },   // C
+            { freq: 493.88, start: 1.5, duration: 0.4 },   // B
+            { freq: 440.00, start: 2.0, duration: 0.6 },   // A
+            { freq: 392.00, start: 2.7, duration: 0.4 },   // G
+            { freq: 349.23, start: 3.2, duration: 0.5 },   // F
+            { freq: 329.63, start: 3.8, duration: 1.2 },   // E (long, sad ending)
+        ];
+        
+        // 暗いベースライン
+        const bassline = [
+            { freq: 164.81, start: 0.0, duration: 1.0 },   // E2
+            { freq: 146.83, start: 1.0, duration: 1.0 },   // D2
+            { freq: 130.81, start: 2.0, duration: 1.0 },   // C2
+            { freq: 110.00, start: 3.0, duration: 2.0 },   // A1 (long)
+        ];
+        
+        for (let i = 0; i < data.length; i++) {
+            const t = i / sampleRate;
+            let value = 0;
+            
+            // メロディ
+            for (const note of melody) {
+                if (t >= note.start && t < note.start + note.duration) {
+                    const noteTime = t - note.start;
+                    const noteProgress = noteTime / note.duration;
+                    // 三角波（悲しい音）
+                    const phase = (2 * Math.PI * note.freq * noteTime) % (2 * Math.PI);
+                    const wave = (2 / Math.PI) * Math.asin(Math.sin(phase));
+                    // エンベロープ
+                    let envelope = 1.0;
+                    if (noteProgress < 0.05) {
+                        envelope = noteProgress / 0.05;
+                    } else if (noteProgress > 0.7) {
+                        envelope = 1.0 - (noteProgress - 0.7) / 0.3;
+                    }
+                    value += wave * envelope * 0.4;
+                }
+            }
+            
+            // ベースライン
+            for (const note of bassline) {
+                if (t >= note.start && t < note.start + note.duration) {
+                    const noteTime = t - note.start;
+                    const noteProgress = noteTime / note.duration;
+                    // サイン波（低音）
+                    const wave = Math.sin(2 * Math.PI * note.freq * noteTime);
+                    let envelope = 1.0;
+                    if (noteProgress < 0.1) {
+                        envelope = noteProgress / 0.1;
+                    } else if (noteProgress > 0.9) {
+                        envelope = 1.0 - (noteProgress - 0.9) / 0.1;
+                    }
+                    value += wave * envelope * 0.25;
+                }
+            }
+            
+            data[i] = Math.max(-1, Math.min(1, value));
+        }
+        
+        return buffer;
+    }
+    
     // ゲームクリア用20秒ミュージック生成
     generateGameClearMusic() {
         const duration = 20;
@@ -400,6 +473,8 @@ class AudioManager {
                 // バッファを生成してキャッシュ
                 if (bgmType === 'gameclear') {
                     buffer = this.generateGameClearMusic();
+                } else if (bgmType === 'gameover') {
+                    buffer = this.generateGameOverMusic();
                 } else {
                     buffer = this.generateLevelBGM();
                 }

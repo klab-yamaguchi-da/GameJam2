@@ -152,6 +152,8 @@ class GameManager {
     }
 
     showGameOver() {
+        // ゲームオーバー音楽を再生
+        this.audioManager.playBGM('gameover');
         this.showScreen('game-over');
     }
 

@@ -239,16 +239,16 @@ class Game {
             return;
         }
         
-        // ランダムに酔っ払いを選択
-        const randomDK = this.donkeyKongs[Math.floor(Math.random() * this.donkeyKongs.length)];
-        
-        // 事前に決定された方向で瓶を生成
-        const barrel = new Barrel(
-            randomDK.x + randomDK.width / 2,
-            randomDK.y + randomDK.height,
-            this.nextBarrelDirection
-        );
-        this.barrels.push(barrel);
+        // 全ての酔っ払いから瓶を生成
+        for (let dk of this.donkeyKongs) {
+            // 事前に決定された方向で瓶を生成
+            const barrel = new Barrel(
+                dk.x + dk.width / 2,
+                dk.y + dk.height,
+                this.nextBarrelDirection
+            );
+            this.barrels.push(barrel);
+        }
         
         // 瓶を投げた後、すぐに次の瓶の方向を決定
         this.nextBarrelDirection = this.generateRandomDirection();

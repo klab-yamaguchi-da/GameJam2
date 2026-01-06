@@ -6,34 +6,45 @@ class GameManager {
         this.gameLoop = null;
         this.currentScreen = 'title';
         this.isRetry = false; // 再チャレンジフラグ
+        this.audioManager = new AudioManager(); // 音響システム
         
         this.setupUI();
     }
 
     setupUI() {
         // スタートボタン
-        document.getElementById('start-button').addEventListener('click', () => {
+        document.getElementById('start-button').addEventListener('click', async () => {
+            // 音声システムを初期化（ユーザーインタラクション後）
+            await this.audioManager.init();
             this.showStory(0);
         });
 
         // ストーリー続行ボタン
-        document.getElementById('story-continue-button').addEventListener('click', () => {
+        document.getElementById('story-continue-button').addEventListener('click', async () => {
+            // 音声システムがまだ初期化されていなければ初期化
+            await this.audioManager.init();
             this.startGame();
         });
 
         // リスタートボタン
-        document.getElementById('restart-button').addEventListener('click', () => {
+        document.getElementById('restart-button').addEventListener('click', async () => {
+            // 音声システムがまだ初期化されていなければ初期化
+            await this.audioManager.init();
             this.isRetry = true; // 再チャレンジフラグをセット
             this.showStory(0);
         });
 
         // 次のステージボタン
-        document.getElementById('next-stage-button').addEventListener('click', () => {
+        document.getElementById('next-stage-button').addEventListener('click', async () => {
+            // 音声システムがまだ初期化されていなければ初期化
+            await this.audioManager.init();
             this.nextStage();
         });
 
         // ゲームクリアボタン
         document.getElementById('game-clear-button').addEventListener('click', () => {
+            // BGMを停止してタイトルに戻る
+            this.audioManager.stopBGM();
             this.showScreen('title');
         });
     }
@@ -70,7 +81,7 @@ class GameManager {
         
         // ゲームインスタンスを作成または再利用
         if (!this.game) {
-            this.game = new Game(this.canvas);
+            this.game = new Game(this.canvas, this.audioManager);
         }
         
         // 指定されたレベルをロード（再チャレンジフラグを渡す）
@@ -82,6 +93,9 @@ class GameManager {
         
         // UI更新
         this.updateUI();
+        
+        // レベルBGMを再生
+        this.audioManager.playBGM('level');
         
         // ゲームループ開始
         if (this.gameLoop) {
@@ -114,9 +128,12 @@ class GameManager {
 
             // ゲーム状態に応じた処理
             if (result === 'gameOver') {
+                this.audioManager.stopBGM();
                 this.showGameOver();
                 return;
             } else if (result === 'stageClear') {
+                this.audioManager.stopBGM();
+                this.audioManager.playClearSound();
                 this.showStageClear();
                 return;
             }
@@ -143,6 +160,8 @@ class GameManager {
     }
 
     showGameClear() {
+        // ゲームクリア音楽を再生
+        this.audioManager.playBGM('gameclear');
         this.showScreen('game-clear');
     }
 }

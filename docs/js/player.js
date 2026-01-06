@@ -1,6 +1,6 @@
 // プレイヤークラス
 class Player {
-    constructor(x, y, speedMultiplier = 1.0, jumpMultiplier = 1.0) {
+    constructor(x, y, speedMultiplier = 1.0, jumpMultiplier = 1.0, audioManager = null) {
         this.x = x;
         this.y = y;
         this.width = CONFIG.PLAYER.WIDTH;
@@ -14,6 +14,11 @@ class Player {
         this.isOnGround = false;
         this.speedMultiplier = speedMultiplier;
         this.jumpMultiplier = jumpMultiplier;
+        this.audioManager = audioManager;
+        
+        // 歩行SE用のカウンター
+        this.walkSoundCounter = 0;
+        this.walkSoundInterval = 15; // フレーム数（歩行SEの間隔）
     }
 
     update(keys, platforms, ladders) {
@@ -56,15 +61,30 @@ class Player {
         // 地面に立っているか、はしごに掴まっていない場合は左右移動可能
         const canMoveHorizontally = !this.isClimbing || this.isOnGround;
         this.velocityX = 0;
+        let isMoving = false;
         if (canMoveHorizontally) {
             if (keys['ArrowLeft']) {
                 this.velocityX = -CONFIG.PLAYER.SPEED * this.speedMultiplier;
                 this.direction = -1;
+                isMoving = true;
             }
             if (keys['ArrowRight']) {
                 this.velocityX = CONFIG.PLAYER.SPEED * this.speedMultiplier;
                 this.direction = 1;
+                isMoving = true;
             }
+        }
+        
+        // 歩行SEの再生（地面に立っている状態で移動している場合）
+        if (isMoving && this.isOnGround && this.audioManager) {
+            this.walkSoundCounter++;
+            if (this.walkSoundCounter >= this.walkSoundInterval) {
+                this.audioManager.playWalkSound();
+                this.walkSoundCounter = 0;
+            }
+        } else {
+            // 移動していない場合はカウンターをリセット
+            this.walkSoundCounter = 0;
         }
 
         // ジャンプ（地面に立っている場合のみ、はしごの上でもジャンプ可能）
@@ -73,6 +93,10 @@ class Player {
             this.velocityY = -CONFIG.PLAYER.JUMP_POWER * this.jumpMultiplier;
             this.isJumping = true;
             this.isOnGround = false;
+            // ジャンプSEを再生
+            if (this.audioManager) {
+                this.audioManager.playJumpSound();
+            }
         }
 
         // 重力適用（はしご登り中以外）
@@ -225,5 +249,6 @@ class Player {
         this.isOnGround = false;
         this.speedMultiplier = speedMultiplier;
         this.jumpMultiplier = jumpMultiplier;
+        this.walkSoundCounter = 0;
     }
 }

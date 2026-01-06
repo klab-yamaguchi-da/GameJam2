@@ -41,7 +41,24 @@ class Player {
                     this.y -= CONFIG.PLAYER.CLIMB_SPEED;
                 }
                 if (keys['ArrowDown']) {
-                    this.y += CONFIG.PLAYER.CLIMB_SPEED;
+                    // 現在掴んでいるはしごを取得
+                    const currentLadder = this.getCurrentLadder(ladders);
+                    if (currentLadder) {
+                        const newY = this.y + CONFIG.PLAYER.CLIMB_SPEED;
+                        const playerBottom = newY + this.height;
+                        const ladderBottom = currentLadder.y + currentLadder.height;
+                        
+                        // はしごの下端を超えないようにする
+                        if (playerBottom <= ladderBottom) {
+                            this.y = newY;
+                        } else {
+                            // はしごの下端に到達した場合、はしごから離れて落下状態にする
+                            this.onLadder = false;
+                            this.isClimbing = false;
+                        }
+                    } else {
+                        this.y += CONFIG.PLAYER.CLIMB_SPEED;
+                    }
                 }
             } else if (!this.isOnGround) {
                 // はしごに掴まっているが動いていない状態（地面に立っていない場合のみ）
@@ -149,6 +166,22 @@ class Player {
                 }
             }
         }
+    }
+
+    // 現在掴んでいるはしごを取得する
+    getCurrentLadder(ladders) {
+        const playerCenterX = this.x + this.width / 2;
+        
+        for (let ladder of ladders) {
+            // プレイヤーが梯子の中にいる場合
+            if (playerCenterX > ladder.x &&
+                playerCenterX < ladder.x + CONFIG.LADDER.WIDTH &&
+                this.y + this.height > ladder.y &&
+                this.y < ladder.y + ladder.height) {
+                return ladder;
+            }
+        }
+        return null;
     }
 
     checkLadderCollision(ladders, keys) {

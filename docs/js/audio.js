@@ -20,7 +20,7 @@ class AudioManager {
         // 音量設定
         this.masterVolume = 0.3;
         this.bgmVolume = 0.4;
-        this.seVolume = 0.5;
+        this.seVolume = 0.8;  // SEをBGMより大きく（BGMにかき消されないように）
         
         this.initialized = false;
     }

@@ -125,7 +125,7 @@ class AudioManager {
             const value = (2 / Math.PI) * Math.asin(Math.sin(phase));
             // エンベロープ
             const envelope = Math.max(0, 1 - progress);
-            data[i] = value * envelope * 0.2;
+            data[i] = value * envelope * 0.35;
         }
         
         return buffer;

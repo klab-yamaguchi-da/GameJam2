@@ -173,7 +173,7 @@ class Player {
         const playerCenterX = this.x + this.width / 2;
         
         for (let ladder of ladders) {
-            // プレイヤーが梯子の中にいる場合
+            // プレイヤーがはしごの中にいる場合
             if (playerCenterX > ladder.x &&
                 playerCenterX < ladder.x + CONFIG.LADDER.WIDTH &&
                 this.y + this.height > ladder.y &&

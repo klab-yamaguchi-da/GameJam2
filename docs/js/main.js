@@ -120,7 +120,7 @@ class GameManager {
         const targetFPS = CONFIG.PHYSICS.FPS;
         const frameTime = 1000 / targetFPS; // ミリ秒単位のフレーム時間
         const maxFrameSkip = 5; // 最大フレームスキップ数（スパイラルオブデス防止）
-        let lastFrameTime = performance.now();
+        let lastFrameTime = null; // 初回フレームで初期化
         let accumulator = 0;
 
         const loop = (currentTime) => {
@@ -128,8 +128,13 @@ class GameManager {
                 return;
             }
 
-            // 経過時間を計算
-            const deltaTime = currentTime - lastFrameTime;
+            // 初回フレームの場合、lastFrameTimeを初期化
+            if (lastFrameTime === null) {
+                lastFrameTime = currentTime;
+            }
+
+            // 経過時間を計算（上限を設定してアキュムレータの過剰な蓄積を防止）
+            const deltaTime = Math.min(currentTime - lastFrameTime, frameTime * maxFrameSkip);
             lastFrameTime = currentTime;
             accumulator += deltaTime;
 

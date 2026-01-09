@@ -123,9 +123,14 @@ class GameManager {
         let lastFrameTime = performance.now();
         let accumulator = 0;
 
-        const loop = (currentTime = performance.now()) => {
+        const loop = (currentTime) => {
             if (this.currentScreen !== 'game') {
                 return;
+            }
+
+            // currentTimeが未定義の場合はperformance.now()を使用
+            if (currentTime === undefined) {
+                currentTime = performance.now();
             }
 
             // 経過時間を計算
@@ -166,7 +171,7 @@ class GameManager {
             this.gameLoop = requestAnimationFrame(loop);
         };
 
-        loop(performance.now());
+        loop(lastFrameTime);
     }
 
     updateUI() {

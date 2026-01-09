@@ -119,6 +119,7 @@ class GameManager {
     runGameLoop() {
         const targetFPS = CONFIG.PHYSICS.FPS;
         const frameTime = 1000 / targetFPS; // ミリ秒単位のフレーム時間
+        const maxFrameSkip = 5; // 最大フレームスキップ数（スパイラルオブデス防止）
         let lastFrameTime = performance.now();
         let accumulator = 0;
 
@@ -133,9 +134,10 @@ class GameManager {
             accumulator += deltaTime;
 
             // 固定タイムステップで更新（45fps）
-            while (accumulator >= frameTime) {
+            // スパイラルオブデスを防ぐため、最大フレームスキップ数を制限
+            let frameCount = 0;
+            while (accumulator >= frameTime && frameCount < maxFrameSkip) {
                 const result = this.game.update();
-                this.updateUI();
 
                 // ゲーム状態に応じた処理
                 if (result === 'gameOver') {
@@ -150,10 +152,12 @@ class GameManager {
                 }
 
                 accumulator -= frameTime;
+                frameCount++;
             }
 
-            // 描画は毎フレーム行う
+            // 描画とUI更新は毎フレーム行う
             this.game.draw();
+            this.updateUI();
 
             this.gameLoop = requestAnimationFrame(loop);
         };

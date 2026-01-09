@@ -72,7 +72,7 @@ const CONFIG = {
     PHYSICS: {
         GRAVITY: 0.6,
         TERMINAL_VELOCITY: 15,
-        FPS: 60
+        FPS: 45
     }
 };
 

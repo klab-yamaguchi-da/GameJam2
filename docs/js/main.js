@@ -117,31 +117,61 @@ class GameManager {
     }
 
     runGameLoop() {
-        const loop = () => {
+        const targetFPS = CONFIG.PHYSICS.FPS;
+        const frameTime = 1000 / targetFPS; // ミリ秒単位の目標フレーム時間 (例: 45fps = 22.22ms)
+        const maxFrameSkip = 5; // 最大フレームスキップ数（スパイラルオブデス防止）
+        let lastFrameTime = null; // 初回フレームで初期化
+        let accumulator = 0;
+
+        const loop = (currentTime) => {
             if (this.currentScreen !== 'game') {
                 return;
             }
 
-            const result = this.game.update();
+            // 初回フレームの場合、lastFrameTimeを初期化
+            if (lastFrameTime === null) {
+                lastFrameTime = currentTime;
+            }
+
+            // 経過時間を計算（上限設定でタブ切り替え等による大きなジャンプを防止）
+            const deltaTime = Math.min(currentTime - lastFrameTime, frameTime * maxFrameSkip);
+            lastFrameTime = currentTime;
+            accumulator += deltaTime;
+
+            // 固定タイムステップ更新（アキュムレータ消費 & スパイラルオブデス防止の二重チェック）
+            let frameCount = 0;
+            while (accumulator >= frameTime && frameCount < maxFrameSkip) {
+                const result = this.game.update();
+
+                // ゲーム状態に応じた処理
+                if (result === 'gameOver') {
+                    this.audioManager.stopBGM();
+                    // アキュムレータをリセット（タイミングドリフト防止）
+                    accumulator = 0;
+                    this.showGameOver();
+                    return;
+                } else if (result === 'stageClear') {
+                    this.audioManager.stopBGM();
+                    this.audioManager.playClearSound();
+                    // アキュムレータをリセット（タイミングドリフト防止）
+                    accumulator = 0;
+                    this.showStageClear();
+                    return;
+                }
+
+                accumulator -= frameTime;
+                frameCount++;
+            }
+
+            // 描画とUI更新は毎フレーム行う
             this.game.draw();
             this.updateUI();
-
-            // ゲーム状態に応じた処理
-            if (result === 'gameOver') {
-                this.audioManager.stopBGM();
-                this.showGameOver();
-                return;
-            } else if (result === 'stageClear') {
-                this.audioManager.stopBGM();
-                this.audioManager.playClearSound();
-                this.showStageClear();
-                return;
-            }
 
             this.gameLoop = requestAnimationFrame(loop);
         };
 
-        loop();
+        // requestAnimationFrameは自動的にcurrentTimeを提供
+        this.gameLoop = requestAnimationFrame(loop);
     }
 
     updateUI() {

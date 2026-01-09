@@ -118,7 +118,7 @@ class GameManager {
 
     runGameLoop() {
         const targetFPS = CONFIG.PHYSICS.FPS;
-        const frameTime = 1000 / targetFPS; // ミリ秒単位のフレーム時間
+        const frameTime = 1000 / targetFPS; // ミリ秒単位の目標フレーム時間 (例: 45fps = 22.22ms)
         const maxFrameSkip = 5; // 最大フレームスキップ数（スパイラルオブデス防止）
         let lastFrameTime = null; // 初回フレームで初期化
         let accumulator = 0;
@@ -133,13 +133,12 @@ class GameManager {
                 lastFrameTime = currentTime;
             }
 
-            // 経過時間を計算（上限を設定してアキュムレータの過剰な蓄積を防止）
+            // 経過時間を計算（上限設定でタブ切り替え等による大きなジャンプを防止）
             const deltaTime = Math.min(currentTime - lastFrameTime, frameTime * maxFrameSkip);
             lastFrameTime = currentTime;
             accumulator += deltaTime;
 
-            // 固定タイムステップで更新（CONFIG.PHYSICS.FPSで指定されたfps）
-            // スパイラルオブデスを防ぐため、最大フレームスキップ数を制限
+            // 固定タイムステップ更新（アキュムレータ消費 & スパイラルオブデス防止の二重チェック）
             let frameCount = 0;
             while (accumulator >= frameTime && frameCount < maxFrameSkip) {
                 const result = this.game.update();

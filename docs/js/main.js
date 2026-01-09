@@ -123,7 +123,7 @@ class GameManager {
         let lastFrameTime = performance.now();
         let accumulator = 0;
 
-        const loop = (currentTime) => {
+        const loop = (currentTime = performance.now()) => {
             if (this.currentScreen !== 'game') {
                 return;
             }
@@ -142,11 +142,15 @@ class GameManager {
                 // ゲーム状態に応じた処理
                 if (result === 'gameOver') {
                     this.audioManager.stopBGM();
+                    // アキュムレータをリセット（タイミングドリフト防止）
+                    accumulator = 0;
                     this.showGameOver();
                     return;
                 } else if (result === 'stageClear') {
                     this.audioManager.stopBGM();
                     this.audioManager.playClearSound();
+                    // アキュムレータをリセット（タイミングドリフト防止）
+                    accumulator = 0;
                     this.showStageClear();
                     return;
                 }

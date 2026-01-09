@@ -128,17 +128,12 @@ class GameManager {
                 return;
             }
 
-            // currentTimeが未定義の場合はperformance.now()を使用
-            if (currentTime === undefined) {
-                currentTime = performance.now();
-            }
-
             // 経過時間を計算
             const deltaTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
             accumulator += deltaTime;
 
-            // 固定タイムステップで更新（45fps）
+            // 固定タイムステップで更新（CONFIG.PHYSICS.FPSで指定されたfps）
             // スパイラルオブデスを防ぐため、最大フレームスキップ数を制限
             let frameCount = 0;
             while (accumulator >= frameTime && frameCount < maxFrameSkip) {
@@ -171,7 +166,8 @@ class GameManager {
             this.gameLoop = requestAnimationFrame(loop);
         };
 
-        loop(lastFrameTime);
+        // requestAnimationFrameは自動的にcurrentTimeを提供
+        this.gameLoop = requestAnimationFrame(loop);
     }
 
     updateUI() {

@@ -117,31 +117,48 @@ class GameManager {
     }
 
     runGameLoop() {
-        const loop = () => {
+        const targetFPS = CONFIG.PHYSICS.FPS;
+        const frameTime = 1000 / targetFPS; // ミリ秒単位のフレーム時間
+        let lastFrameTime = performance.now();
+        let accumulator = 0;
+
+        const loop = (currentTime) => {
             if (this.currentScreen !== 'game') {
                 return;
             }
 
-            const result = this.game.update();
-            this.game.draw();
-            this.updateUI();
+            // 経過時間を計算
+            const deltaTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+            accumulator += deltaTime;
 
-            // ゲーム状態に応じた処理
-            if (result === 'gameOver') {
-                this.audioManager.stopBGM();
-                this.showGameOver();
-                return;
-            } else if (result === 'stageClear') {
-                this.audioManager.stopBGM();
-                this.audioManager.playClearSound();
-                this.showStageClear();
-                return;
+            // 固定タイムステップで更新（45fps）
+            while (accumulator >= frameTime) {
+                const result = this.game.update();
+                this.updateUI();
+
+                // ゲーム状態に応じた処理
+                if (result === 'gameOver') {
+                    this.audioManager.stopBGM();
+                    this.showGameOver();
+                    return;
+                } else if (result === 'stageClear') {
+                    this.audioManager.stopBGM();
+                    this.audioManager.playClearSound();
+                    this.showStageClear();
+                    return;
+                }
+
+                accumulator -= frameTime;
             }
+
+            // 描画は毎フレーム行う
+            this.game.draw();
 
             this.gameLoop = requestAnimationFrame(loop);
         };
 
-        loop();
+        loop(performance.now());
     }
 
     updateUI() {

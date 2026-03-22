@@ -8,7 +8,7 @@ const CONFIG = {
     PLAYER: {
         WIDTH: 20,
         HEIGHT: 30,
-        SPEED: 2.25,
+        SPEED: 3,
         JUMP_POWER: 4.5,
         CLIMB_SPEED: 1.5,
         COLOR: '#87ceeb', // 水色のスーツ

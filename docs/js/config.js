@@ -8,9 +8,9 @@ const CONFIG = {
     PLAYER: {
         WIDTH: 20,
         HEIGHT: 30,
-        SPEED: 3,
-        JUMP_POWER: 6,
-        CLIMB_SPEED: 2,
+        SPEED: 2.25,
+        JUMP_POWER: 4.5,
+        CLIMB_SPEED: 1.5,
         COLOR: '#87ceeb', // 水色のスーツ
         BOX_COLOR: '#deb887', // 段ボール箱の色
         GOAL_COLLISION_DISTANCE: 30
@@ -19,10 +19,10 @@ const CONFIG = {
     // 酒瓶設定
     BARREL: {
         RADIUS: 10,
-        SPEED: 2,
+        SPEED: 1.5,
         SPAWN_INTERVAL: 2000, // ミリ秒
         COLOR: '#3d6b2e', // 緑色の酒瓶
-        LADDER_DESCENT_PROBABILITY: 0.02
+        LADDER_DESCENT_PROBABILITY: 0.015 // 元の値 0.02 を 45/60 でスケール（60FPS化対応、毎秒当たりの確率を維持）
     },
     
     // 酔っぱらい設定
@@ -70,9 +70,9 @@ const CONFIG = {
     
     // 物理
     PHYSICS: {
-        GRAVITY: 0.6,
-        TERMINAL_VELOCITY: 15,
-        FPS: 45
+        GRAVITY: 0.3375,       // 元の値 0.6 を (45/60)² でスケール（60FPS化対応）
+        TERMINAL_VELOCITY: 11.25, // 元の値 15 を 45/60 でスケール（60FPS化対応）
+        FPS: 60
     }
 };
 

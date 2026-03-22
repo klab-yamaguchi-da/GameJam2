@@ -118,7 +118,7 @@ class GameManager {
 
     runGameLoop() {
         const targetFPS = CONFIG.PHYSICS.FPS;
-        const frameTime = 1000 / targetFPS; // ミリ秒単位の目標フレーム時間 (例: 45fps = 22.22ms)
+        const frameTime = 1000 / targetFPS; // ミリ秒単位の目標フレーム時間 (例: 60fps = 16.67ms)
         const maxFrameSkip = 5; // 最大フレームスキップ数（スパイラルオブデス防止）
         let lastFrameTime = null; // 初回フレームで初期化
         let accumulator = 0;
